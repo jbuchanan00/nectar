@@ -14,8 +14,9 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"dev:up": "docker compose -f docker-compose.dev.yml up -d --build",
-		"dev:reset": "docker compose -f docker-compose.dev.yml down --volumes --remove-orphans && docker-compose -f docker-db/docker-compose.yml down --volumes --remove-orphans && docker-compose -f docker-db/docker-compose.yml up -d && docker compose -f docker-compose.dev.yml up -d --build",
+		"dev:db:reset": "docker-compose -f docker-db/docker-compose.yml down -v --remove-orphans && docker-compose -f docker-db/docker-compose.yml up -d",
+		"dev:up": "docker compose -f docker-compose.dev.yml up -d --build && docker-compose -f docker-db/docker-compose.yml up -d",
+		"dev:reset": "docker compose -f docker-compose.dev.yml down --volumes --remove-orphans && docker-compose -f docker-db/docker-compose.yml down -v --remove-orphans && docker-compose -f docker-db/docker-compose.yml down --volumes --remove-orphans && docker-compose -f docker-db/docker-compose.yml up -d && docker compose -f docker-compose.dev.yml up -d --build && docker-compose -f docker-db/docker-compose.yml up -d",
 		"prod:up": "docker compose -f docker-compose.yml up --build",
 		"prod:reset": "docker compose -f docker-compose.yml down --volumes --remove-orphans && docker compose -f docker-compose.yml up --build"
 	},

@@ -1,24 +1,42 @@
 CREATE TABLE IF NOT EXISTS role (
     id BIGSERIAL PRIMARY KEY,
-    roleName varchar(35)
+    role_name VARCHAR NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS media_type (
+    id BIGSERIAL PRIMARY KEY,
+    type_name VARCHAR NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS post (
+    id VARCHAR PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
+    role_id INTEGER NOT NULL REFERENCES role(id),
+    media_type_id INTEGER NOT NULL REFERENCES media_type(id),
+    media_url VARCHAR NOT NULL,
+    like_count INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS account (
-    id BIGSERIAL PRIMARY KEY,
-    firstName Text,
-    lastName Text,
-    email Text,
-    username varchar(35),
-    key Text,
-    roleId int references role(id),
-    location point,
-    bio Text
+    id VARCHAR PRIMARY KEY,
+    username VARCHAR NOT NULL,
+    role_id INTEGER NOT NULL REFERENCES role(id)
 );
 
-CREATE TABLE IF NOT EXISTS authentication (
-    userId bigint PRIMARY KEY REFERENCES account(id),
-    hash Text,
-    salt Text
+CREATE TABLE IF NOT EXISTS user_post (
+    post_id VARCHAR,
+    user_Id VARCHAR
 );
 
-INSERT INTO role (rolename) VALUES ('canvas'), ('artist'), ('shop');
+CREATE TABLE IF NOT EXISTS post_like (
+    post_id VARCHAR,
+    user_Id VARCHAR
+);
+
+ALTER TABLE user_post ADD CONSTRAINT "user_post_pkey" PRIMARY KEY (post_id, user_id);
+ALTER TABLE post_like ADD CONSTRAINT "post_like_pkey" PRIMARY KEY (post_id, user_id);
+
+INSERT INTO role (role_name) VALUES ('canvas'), ('artist'), ('shop');
+
+INSERT INTO media_type (type_name) VALUES ('image'), ('gif'), ('video'), ('slideshow')
