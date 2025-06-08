@@ -24,13 +24,16 @@
 </script>
 
 <div id="top-nav" ></div>
-
-{@render children()}
-
+<div class="content">
+    {@render children()}
+</div>
 <div id="bottom-nav"></div>
 
 
 <style>
+    .content {
+        padding-bottom: 100px;
+    }
 	#top-nav {
         width: 100%;
         margin-top: -10px;

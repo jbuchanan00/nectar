@@ -11,7 +11,13 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		
 	}
+	declare type PostForm = {
+			title?: string | null,
+			image?: string | null,
+			desc?: string | null
+		}
 }
 
 export {};
