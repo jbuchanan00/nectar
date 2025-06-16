@@ -11,7 +11,7 @@
             </div>
             <div class="infoContainer">
                 <h3>{formData.title}</h3>
-                <p>{formData.desc}</p>
+                <p>{formData.description}</p>
             </div>
         </div>
     </div>

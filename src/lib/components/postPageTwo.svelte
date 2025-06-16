@@ -7,6 +7,11 @@
         const target = event.target as HTMLInputElement
         target.value ? formChange(target.name, target.value) : null
     }
+
+	function triggerRadioChange(event: FocusEvent ): void{
+		const target = event["target"]as HTMLInputElement
+        target.value ? formChange('role', target.value) : null
+	}
 </script>
 
 <div class="form_group">
@@ -17,14 +22,14 @@
         <label for="description">Description</label>
         <textarea name="description" id="description" placeholder="Enter description for post" rows=5 class="form_style" onblur={triggerChange}></textarea>
     </div>
-    <div id="options" class="form_group">
-        <fieldset onblur={triggerChange}>
+    <div id="options" class="form_group" onblur={triggerChange}>
+        <fieldset >
             <legend class="sub_title">What was your role</legend>
-            <input type="radio" name="radio" value="Canvas" id="canvas" defaultChecked/>
+            <input type="radio" name="radio" value="Canvas" id="canvas" onblur={triggerRadioChange} defaultChecked/>
             <label for="canvas"><img src={canvas} alt="canvas" /><span>Canvas</span></label>
-            <input type="radio" name="radio" value="Artist" id="artist"/>
+            <input type="radio" name="radio" value="Artist" id="artist" onblur={triggerRadioChange}/>
             <label for="artist"><img src={artist} alt="artist" /><span>Artist</span></label>
-            <input type="radio" name="radio" value="Neither" id="neither"/>
+            <input type="radio" name="radio" value="Neither" id="neither" onblur={triggerRadioChange}/>
             <label for="neither"><img src={heartEyes} alt="interested" /><span>Inspired</span></label>
         </fieldset>
 </div>
