@@ -4,6 +4,7 @@
     import type {PostForm} from '../../baseTypes'
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
+	import type { EventHandler } from 'svelte/elements';
 
     
     let initPageNum: number | null = 1
@@ -30,6 +31,19 @@
             totalForm[input] = value;
         }
     }
+    function handleSubmit(event: { action: URL; formData: FormData; formElement: HTMLFormElement; controller: AbortController; submitter: HTMLElement | null; cancel: () => void; }){
+        const defaultForm = event.formData
+        defaultForm.delete('tag')
+
+        if(totalForm['image']){
+            defaultForm.append('image', totalForm['image'])
+        }
+        if(totalForm['tag']){
+            for( const tag of totalForm['tag']) {
+                defaultForm.append('tags', tag)
+            }
+        }
+    }
 </script>
 
 <div class="postCreationContainer">
@@ -39,7 +53,7 @@
     </div>
     <div class="form_area">
         <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-        <form method="POST" use:enhance action="?/upload">
+        <form method="POST" use:enhance={(event) => handleSubmit(event)} action="?/upload">
             <div class:pageOne={pageNum === 1} class:pageOneHide={pageNum !== 1}>
                 <PageOne formChange={handleFormChange}/>
                 <!-- svelte-ignore a11y_click_events_have_key_events -->

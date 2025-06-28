@@ -1,6 +1,6 @@
 export declare type PostForm = {
     tag: string[],
-    image?: string | null,
+    image?: Blob | string | null,
     desc?: string | null,
     role?: string | null
 }
