@@ -10,7 +10,7 @@
     
 
     let pageNum = $state(initPageNum)
-    let totalForm: PostForm = $state({})
+    let totalForm: PostForm = $state({role: 'Canvas'})
 
     function handleNext(){
         pageNum += 1
@@ -60,7 +60,11 @@
             </div>
             <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div class:pageThree={pageNum === 3} class:pageThreeHide={pageNum !== 3}>
-                <PreviewPage formData={totalForm}/>
+                {#if totalForm.image && totalForm.title}
+                    <PreviewPage formData={totalForm}/>
+                {:else}
+                    <div>Finish required fields</div>
+                {/if}
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <div class="prevContainer" onclick={handlePrevious}>
                     <img src={nextIcon} alt="previous" class="previousIcon"  /> Prev
