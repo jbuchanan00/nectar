@@ -10,7 +10,7 @@
     
 
     let pageNum = $state(initPageNum)
-    let totalForm: PostForm = $state({role: 'Canvas'})
+    let totalForm: PostForm = $state({role: 'Canvas', tag: []})
 
     function handleNext(){
         pageNum += 1
@@ -22,8 +22,13 @@
     function handlePrevious(){
         pageNum -= 1
     }
-    function handleFormChange(input: 'title' | 'image' | 'desc' | 'role', value: string){
-        totalForm[input] = value;
+    function handleFormChange(input: 'tag' | 'image' | 'desc' | 'role', value: string){
+        console.log("CHANGED", input, value)
+        if(input === 'tag'){
+            totalForm['tag'].push(value)
+        }else{
+            totalForm[input] = value;
+        }
     }
 </script>
 
@@ -45,7 +50,7 @@
             </div>
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <div class:pageTwo={pageNum === 2} class:pageTwoHide={pageNum !== 2}>
-                <PageTwo formChange={handleFormChange}/>
+                <PageTwo formChange={handleFormChange} tags={totalForm['tag']}/>
                 <div class="arrowContainer">
                     <!-- svelte-ignore a11y_click_events_have_key_events -->
                     <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -60,8 +65,9 @@
             </div>
             <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div class:pageThree={pageNum === 3} class:pageThreeHide={pageNum !== 3}>
-                {#if totalForm.image && totalForm.title}
+                {#if totalForm.image}
                     <PreviewPage formData={totalForm}/>
+                    <button type="submit">Post</button>
                 {:else}
                     <div>Finish required fields</div>
                 {/if}

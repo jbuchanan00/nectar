@@ -1,37 +1,49 @@
 <script lang="ts">
     import {artist, canvas, heartEyes} from '$lib/assets/icons'
 
-    let {formChange} = $props()
+	let newTag = $state('')
+
+    let {formChange, tags} = $props()
 
     function triggerChange(event: FocusEvent){
         const target = event.target as HTMLInputElement
-        target.value ? formChange(target.name, target.value) : null
+			target.value ? formChange(target.name, target.value) : null
     }
 
 	function triggerRadioChange(event: FocusEvent ): void{
 		const target = event["target"]as HTMLInputElement
         target.value ? formChange('role', target.value) : null
 	}
+
+	function handleTagAdd(){
+		formChange('tag', newTag)
+		newTag = ''
+	}
 </script>
 
+
 <div class="form_group">
-        <label for="title">Title</label>
-        <input name="title" type="text" id="title" placeholder="Enter post title" onblur={triggerChange} class="form_style"/>
-    </div>
-    <div class="form_group">
-        <label for="description">Description</label>
-        <textarea name="description" id="description" placeholder="Enter description for post" rows=5 class="form_style" onblur={triggerChange}></textarea>
-    </div>
-    <div id="options" class="form_group" onblur={triggerChange}>
-        <fieldset >
-            <legend class="sub_title">What was your role</legend>
-            <input type="radio" name="radio" value="Canvas" id="canvas" onblur={triggerRadioChange} defaultChecked/>
-            <label for="canvas"><img src={canvas} alt="canvas" /><span>Canvas</span></label>
-            <input type="radio" name="radio" value="Artist" id="artist" onblur={triggerRadioChange}/>
-            <label for="artist"><img src={artist} alt="artist" /><span>Artist</span></label>
-            <input type="radio" name="radio" value="Neither" id="neither" onblur={triggerRadioChange}/>
-            <label for="neither"><img src={heartEyes} alt="interested" /><span>Inspired</span></label>
-        </fieldset>
+	<label for="description">Description</label>
+	<textarea name="description" id="description" placeholder="Enter description for post" rows=5 class="form_style" onblur={triggerChange}></textarea>
+</div>
+<div class="form_group">
+	<label for="tags">Tags</label>
+	<input name="tags" type="text" id="title" placeholder="Add post tags" class="form_style" bind:value={newTag}/>
+	{#each tags as tag}
+		<p>{tag}</p>
+	{/each}
+	<button type='button' class="addTagButton" onclick={handleTagAdd}>Add</button>
+</div>
+<div id="options" class="form_group" onblur={triggerChange}>
+	<fieldset >
+		<legend class="sub_title">What was your role</legend>
+		<input type="radio" name="radio" value="Canvas" id="canvas" onblur={triggerRadioChange} defaultChecked/>
+		<label for="canvas"><img src={canvas} alt="canvas" /><span>Canvas</span></label>
+		<input type="radio" name="radio" value="Artist" id="artist" onblur={triggerRadioChange}/>
+		<label for="artist"><img src={artist} alt="artist" /><span>Artist</span></label>
+		<input type="radio" name="radio" value="Neither" id="neither" onblur={triggerRadioChange}/>
+		<label for="neither"><img src={heartEyes} alt="interested" /><span>Inspired</span></label>
+	</fieldset>
 </div>
 
 <style>

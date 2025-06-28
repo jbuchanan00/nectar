@@ -26,7 +26,7 @@
 </script>
 
 <div>
-    <input type="file" id="imagePicker" accept=".jpg,.png,.svg" bind:this={fileInput} onchange={handleImageChange}/>
+    <input type="file" id="imagePicker" accept=".jpg,.png,.svg,.heic" bind:this={fileInput} onchange={handleImageChange}/>
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <img src={previewImage} alt="placeholder" onclick={triggerImageUpload} class="postImage"/>
