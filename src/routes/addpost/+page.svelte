@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import nextIcon from '$lib/assets/icons/next.svg'
-    import type {PostForm} from '../baseTypes'
+    import type {PostForm} from '../../baseTypes'
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
 
