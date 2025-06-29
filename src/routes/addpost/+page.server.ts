@@ -1,7 +1,6 @@
 import { error } from '@sveltejs/kit'
 import {mkdir, writeFile} from 'node:fs/promises'
 import path from 'node:path'
-import dotenv from 'dotenv'
 
 export const actions = {
     upload: async ({request, locals}) => {
@@ -11,7 +10,7 @@ export const actions = {
             return
         }
         let [mime, raw] = imageData.split(',', 2)
-        let [imageType, encodingtype] = mime.split(';', 2)
+        let [imageType] = mime.split(';', 1)
         const extension = imageType.split('/')[1] ?? 'bin'
         const form = Object.fromEntries(formData)
  
@@ -32,6 +31,6 @@ export const actions = {
         console.log('SUCCESS')
         const { tag, desc, role } = form
 
-
+        
     }
 }
