@@ -4,7 +4,6 @@
     import type {PostForm} from '../../baseTypes'
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
-	import type { EventHandler } from 'svelte/elements';
 
     
     let initPageNum: number | null = 1
@@ -53,7 +52,7 @@
     </div>
     <div class="form_area">
         <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-        <form method="POST" use:enhance={(event) => handleSubmit(event)} action="?/upload">
+        <form method="POST" use:enhance={(event) => handleSubmit(event)} action="?/upload" enctype="multipart/form-data">
             <div class:pageOne={pageNum === 1} class:pageOneHide={pageNum !== 1}>
                 <PageOne formChange={handleFormChange}/>
                 <!-- svelte-ignore a11y_click_events_have_key_events -->

@@ -8,9 +8,11 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - "C:/Users/joshb/Documents/project-images/upload:/app/uploads:rw"
     environment:
       - NODE_ENV=development
       - REDIS_URL=redis://redis:6379 
+      - UPLOAD_DIR=/app/uploads
     env_file: .env
     networks:
       - shared
