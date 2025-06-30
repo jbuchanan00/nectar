@@ -8,13 +8,24 @@ CREATE TABLE IF NOT EXISTS media_type (
     type_name VARCHAR NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS tag (
+    id BIGSERIAL PRIMARY KEY,
+    tag_name VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS post_tag (
+    tag_id INTEGER REFERENCES tag(id),
+    post_id VARCHAR REFERENCES post(id)
+);
+
 CREATE TABLE IF NOT EXISTS post (
     id VARCHAR PRIMARY KEY,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     role_id INTEGER NOT NULL REFERENCES role(id),
     media_type_id INTEGER NOT NULL REFERENCES media_type(id),
-    media_url VARCHAR NOT NULL,
+    media_id VARCHAR NOT NULL,
     like_count INTEGER
 );
 
