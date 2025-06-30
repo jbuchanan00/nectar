@@ -29,6 +29,12 @@ CREATE TABLE IF NOT EXISTS post (
     like_count INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS post_image (
+    image_id VARCHAR,
+    post_id VARCHAR REFERENCES post(id),
+    CONSTRAINT post_image_pkey PRIMARY KEY(image_id, post_id)
+);
+
 CREATE TABLE IF NOT EXISTS account (
     id VARCHAR PRIMARY KEY,
     username VARCHAR NOT NULL,
