@@ -1,13 +1,12 @@
 import { error } from '@sveltejs/kit'
 import {mkdir, writeFile} from 'node:fs/promises'
 import path from 'node:path'
-import type { Post, PostTags } from '../../baseTypes.js'
-import { existsSync } from 'node:fs'
+import { insertPost } from '$lib/db/handlers/posts/insertPost.js'
+import type { Post, PostTags, Role } from '../../baseTypes.js'
 
 export const actions = {
     upload: async ({request, locals}) => {
         const formData = await request.formData()
-        const formTags = formData?.get('tags')
         let imageData = formData?.get('image') as string
         if(imageData === null){
             return
@@ -16,11 +15,12 @@ export const actions = {
         let [imageType] = mime.split(';', 1)
         const extension = imageType.split('/')[1] ?? 'bin'
         const determineMediaType = (ext: string): 'image' | 'gif' | 'video' | 'slideshow' => {
-            if(ext in ['jpeg', 'svg+xml', 'png', 'heic']){
+            console.log(ext)
+            if(ext === 'jpeg' || ext === 'svg+xml' || ext === 'png' || ext === 'heic'){
                 return 'image'
-            }else if(ext in ['gif']){
+            }else if(ext === 'gif'){
                 return 'gif'
-            }else if(ext in ['mp4', 'mkv']){
+            }else if(ext === 'mp4' || ext === 'mkv'){
                 return 'video'
             }else{
                 return 'slideshow'
@@ -43,25 +43,24 @@ export const actions = {
             throw error(401, {message: "Error saving image"})
         }
         console.log('SUCCESS')
-        const { desc, role } = form
-        console.log('TAG', Array.from(formData), Object.fromEntries(formData))
+        const { tags, description, radio } = form
+        const parsedTags: PostTags = JSON.parse(tags as string)
         const newPost: Post = {
             id: crypto.randomUUID(),
             createdAt: new Date(),
             updatedAt: null,
-            role: role as 'canvas' | 'artist' | 'shop',
+            role: radio.toString().toLowerCase() as Role,
             mediaType: determineMediaType(extension),
             mediaId: uuidForImage,
-            desc: desc as string,
+            body: description as string,
             likeCount: 0
         }
 
-        let tagToString: string[]
-
+        try{
+            await insertPost(locals.db, newPost, parsedTags)
+        }catch(e){
+            console.error(`Failed to insert post, ${e}`)
+        }        
         
-
-        // const tagsForPost: PostTags = {
-        //     tags: tags as string[]
-        // }
     }
 }

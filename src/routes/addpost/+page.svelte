@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import nextIcon from '$lib/assets/icons/next.svg'
-    import type {PostForm} from '../../baseTypes'
+    import type {PostForm, Role} from '../../baseTypes'
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
 
@@ -26,7 +26,10 @@
         console.log("CHANGED", input, value)
         if(input === 'tag'){
             totalForm['tag'].push(value)
-        }else{
+        }else if(input === 'role'){
+            totalForm['role'] = value as Role
+        }
+        else{
             totalForm[input] = value;
         }
     }
@@ -37,10 +40,9 @@
         if(totalForm['image']){
             defaultForm.append('image', totalForm['image'])
         }
+        
         if(totalForm['tag']){
-            for( const tag of totalForm['tag']) {
-                defaultForm.append('tags', tag)
-            }
+            defaultForm.append('tags', JSON.stringify(totalForm['tag']))
         }
     }
 </script>

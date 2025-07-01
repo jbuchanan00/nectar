@@ -9,14 +9,16 @@ export declare type Post = {
     id: string,
     createdAt: Date | string | number,
     updatedAt: Date | string | number | null,
-    role: 'canvas' | 'artist' | 'shop',
-    mediaType: "image" | "gif" | "video" | "slideshow",
+    role: Role | number,
+    mediaType: MediaType | number,
     mediaId: string,
-    desc: string,
+    body: string,
     likeCount: number
 }
 
-export declare type PostTags = {
-    tags: string[]
-}
+export declare type PostTags = string[]
+
+export declare type Role = 'canvas' | 'artist' | 'shop'
+
+export declare type MediaType = 'image' | 'gif' | 'video' | 'slideshow'
 

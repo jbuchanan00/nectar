@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS post (
     role_id INTEGER NOT NULL REFERENCES role(id),
     media_type_id INTEGER NOT NULL REFERENCES media_type(id),
     media_id VARCHAR NOT NULL,
+    body VARCHAR,
     like_count INTEGER
 );
 
