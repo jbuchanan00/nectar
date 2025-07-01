@@ -14,11 +14,6 @@ CREATE TABLE IF NOT EXISTS tag (
     created_at TIMESTAMP NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS post_tag (
-    tag_id INTEGER REFERENCES tag(id),
-    post_id VARCHAR REFERENCES post(id)
-);
-
 CREATE TABLE IF NOT EXISTS post (
     id VARCHAR PRIMARY KEY,
     created_at TIMESTAMP NOT NULL,
@@ -27,6 +22,11 @@ CREATE TABLE IF NOT EXISTS post (
     media_type_id INTEGER NOT NULL REFERENCES media_type(id),
     media_id VARCHAR NOT NULL,
     like_count INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS post_tag (
+    tag_id INTEGER REFERENCES tag(id),
+    post_id VARCHAR REFERENCES post(id)
 );
 
 CREATE TABLE IF NOT EXISTS post_image (

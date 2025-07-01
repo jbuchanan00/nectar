@@ -10,7 +10,7 @@
     
 
     let pageNum = $state(initPageNum)
-    let totalForm: PostForm = $state({role: 'Canvas', tag: []})
+    let totalForm: PostForm = $state({role: 'canvas', tag: []})
 
     function handleNext(){
         pageNum += 1
@@ -32,7 +32,7 @@
     }
     function handleSubmit(event: { action: URL; formData: FormData; formElement: HTMLFormElement; controller: AbortController; submitter: HTMLElement | null; cancel: () => void; }){
         const defaultForm = event.formData
-        defaultForm.delete('tag')
+        defaultForm.delete('tags')
 
         if(totalForm['image']){
             defaultForm.append('image', totalForm['image'])
