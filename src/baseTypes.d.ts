@@ -16,6 +16,12 @@ export declare type Post = {
     likeCount: number
 }
 
+export declare type User = {
+    id: string,
+    displayName: string,
+    role: Role
+}
+
 export declare type PostTags = string[]
 
 export declare type Role = 'canvas' | 'artist' | 'shop'
