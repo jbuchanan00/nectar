@@ -4,8 +4,8 @@ import getTagId from "./getTagId";
 
 export default async function getTagIds(db: PoolClient, list: PostTags): Promise<number[]> {
     let listOfIds = []
-    for(const item in list){
-        listOfIds.push(getTagId(db, item))
+    for(const i in list){
+        listOfIds.push(getTagId(db, list[i]))
     }
     listOfIds = await Promise.all(listOfIds)
     return listOfIds

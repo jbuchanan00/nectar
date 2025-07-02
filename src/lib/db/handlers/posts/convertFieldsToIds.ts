@@ -6,7 +6,6 @@ import type { MediaType, Post, Role } from "../../../../baseTypes";
 
 
 export default async function convertFieldsToIds(db: PoolClient, post: Post): Promise<Post>{
-    console.log('CONVERTING', post)
     post.role = await getRoleId(db, post.role as Role)
     post.mediaType = await getMediaTypeId(db, post.mediaType as MediaType)
 

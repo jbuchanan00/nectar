@@ -15,7 +15,6 @@ export const actions = {
         let [imageType] = mime.split(';', 1)
         const extension = imageType.split('/')[1] ?? 'bin'
         const determineMediaType = (ext: string): 'image' | 'gif' | 'video' | 'slideshow' => {
-            console.log(ext)
             if(ext === 'jpeg' || ext === 'svg+xml' || ext === 'png' || ext === 'heic'){
                 return 'image'
             }else if(ext === 'gif'){

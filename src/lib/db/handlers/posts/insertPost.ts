@@ -12,7 +12,6 @@ const insertPost = async (db: PoolClient, postMessage: Post, tags: PostTags): Pr
         (id, created_at, updated_at, role_id, media_type_id, media_id, body, like_count)
         VALUES
         ($1, $2, $3, $4, $5, $6, $7, $8)`
-    console.log('POST MESSAGE', postMessage)
     const listOfTags = await getTagIds(db, tags)
     
     await db.query(sqlPostQuery, Object.values(postMessage))
@@ -24,7 +23,6 @@ const insertPost = async (db: PoolClient, postMessage: Post, tags: PostTags): Pr
         }
     }
     const values = listOfTags.map((item) => {return [Number(item), postMessage.id]})
-    console.log('QUERY', sqlPostTagQuery, 'VALUES', values.flat())
     await db.query(sqlPostTagQuery, values.flat())
 }
 
