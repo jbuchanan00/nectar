@@ -64,7 +64,7 @@
         {/if}
     </div>
     <div class="navigationButton">
-        <button class="nextStep" disabled={!totalForm["image"]}>NEXT STEP<img src={`${base}/icons/right-arrow.svg`} alt="right-arrow" /></button>
+        <button onclick={handleNext} class="nextStep" disabled={!totalForm["image"]}>NEXT STEP<img src={`${base}/icons/right-arrow.svg`} alt="right-arrow" /></button>
     </div>
 </div>
 
@@ -73,6 +73,10 @@
         margin-left: 5px;
         -webkit-filter: invert(100%);
         filter: invert(100%);
+    }
+    .nextStep:active {
+        box-shadow: none;
+        transform: translateX(3px) translateY(3px);
     }
     .nextStep {
         width: 100%;
