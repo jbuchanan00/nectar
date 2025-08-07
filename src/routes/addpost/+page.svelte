@@ -2,8 +2,10 @@
     import { enhance } from '$app/forms';
     import nextIcon from '$lib/assets/icons/next.svg'
     import type {PostForm, Role} from '../../baseTypes'
+    import { base } from '$app/paths';
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
+	import { page } from '$app/state';
 
     
     let initPageNum: number | null = 1
@@ -14,10 +16,6 @@
 
     function handleNext(){
         pageNum += 1
-    }
-
-    function handleExit(){
-        history.back()
     }
     function handlePrevious(){
         pageNum -= 1
@@ -48,170 +46,97 @@
 </script>
 
 <div class="postCreationContainer">
-    <div class="creationHeading">
-        <h3>New Post</h3>
-        <button class="exit" onclick={handleExit}>X</button>
+    <div class="header">
+        <div class="headerText">
+            <h3>CREATE POST</h3>
+        </div>
+        <div class="pageNumber">
+            {pageNum}/3
+        </div>
     </div>
-    <div class="form_area">
-        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-        <form method="POST" use:enhance={(event) => handleSubmit(event)} action="?/upload" enctype="multipart/form-data">
-            <div class:pageOne={pageNum === 1} class:pageOneHide={pageNum !== 1}>
-                <PageOne formChange={handleFormChange}/>
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div class="nextContainer" id="pageOneNext" onclick={handleNext}>
-                    Next <img src={nextIcon} alt="second next" class="nextIcon"  />
-                </div>
-            </div>
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <div class:pageTwo={pageNum === 2} class:pageTwoHide={pageNum !== 2}>
-                <PageTwo formChange={handleFormChange} tags={totalForm['tag']}/>
-                <div class="arrowContainer">
-                    <!-- svelte-ignore a11y_click_events_have_key_events -->
-                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                    <div class="prevContainer" onclick={handlePrevious}>
-                        <img src={nextIcon} alt="previous" class="previousIcon"  /> Prev
-                    </div>
-                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                    <div class="nextContainer" onclick={handleNext}>
-                        Next <img src={nextIcon} alt="second next" class="nextIcon"  />
-                    </div>
-                </div>
-            </div>
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <div class:pageThree={pageNum === 3} class:pageThreeHide={pageNum !== 3}>
-                {#if totalForm.image}
-                    <PreviewPage formData={totalForm}/>
-                    <button type="submit">Post</button>
-                {:else}
-                    <div>Finish required fields</div>
-                {/if}
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <div class="prevContainer" onclick={handlePrevious}>
-                    <img src={nextIcon} alt="previous" class="previousIcon"  /> Prev
-                </div>
-            </div>
-        </form>
+    <div class="body">
+        {#if pageNum === 1}
+        <div><PageOne formChange={handleFormChange}/></div>
+        {:else if pageNum === 2}
+        <div></div>
+        {:else}
+        <div></div>
+        {/if}
+    </div>
+    <div class="navigationButton">
+        <button class="nextStep" disabled={!totalForm["image"]}>NEXT STEP<img src={`${base}/icons/right-arrow.svg`} alt="right-arrow" /></button>
     </div>
 </div>
 
 <style>
-    .pageThreeHide {
-        display: none;
+    .nextStep img {
+        margin-left: 5px;
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
     }
-    .pageThree {
+    .nextStep {
         width: 100%;
-        padding: 10px;
+        border-radius: 0;
+        border: 3px solid black;
+        box-shadow: 3px 3px black;
+        height: 50px;
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #22c55e;
+        color: white;
+    }
+    .nextStep:disabled {
+        background-color: #d1d5db;
+        color: #4b5563;
+    }
+    .nextStep:disabled img {
+        filter: invert(0%);
+    }
+    .navigationButton {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        border: 1px solid #000;
+        width: 80%;
     }
-    #pageOneNext {
-        width: 100%;
-        display: flex;
-        justify-content: end;
-    }
-    .prevContainer {
-        width: 35%;
+    .body {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .nextContainer {
-        width: 35%;
-        align-items: center;
-        justify-content: center;
-        display: flex;
+    .pageNumber {
+        background-color: white;
+        padding: 5px;
+        border: 2px solid black;
+        box-shadow: 2px 2px black;
+        margin-right: 10px;
+        font-size: small;
+        font-weight: bolder;
     }
-    .arrowContainer {
-        width: 100%;
+    .headerText {
+        font-weight: bolder;
+        font-size: .9em;
+        letter-spacing: -.2em;
+        padding: 5px;
+    }
+    .header {
+        background-color: #f472b6;
         display: flex;
         justify-content: space-between;
-    }
-    .previousIcon {
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        display: flex;
         align-items: center;
-        justify-content: end;
-        padding-right: 10px;
-        height: 25px;
-        border: none;
-        margin-right: 10px;
-    }
-
-    .exit {
-        width: 25px;
-        height: 2em;
-        margin: 5px;
-        background-color:#7FBC8C;
-        border: none;
-        font-weight: bolder;
-        font-size: 1.25em;
-        position: absolute;
-        right: 0;
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-    }
-
-    
-    .form_area {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		background-color: #eddcd9;
-		width: 90%;
-		border: 2px solid #264143;
-		border-radius: 20px;
-		box-shadow: 3px 4px 0px 1px #e99f4c;
-	}
-    .nextIcon {
-        height: 25px;
-        border: none;
-        margin-left: 10px;
-    }
-    .creationHeading {
+        height: 60px;
+        border-bottom: 3px solid black;
         width: 100%;
-        display: flex;
-    }
-    .creationHeading h3 {
-        text-align: center;
-        width: 100%;
-        height: 3em;
-        padding-top: 10px;
-        text-decoration: underline;
     }
     .postCreationContainer {
+        width: 375px;
+        background-color: white;
+        min-height: 750px;
+        border: 5px solid black;
+        box-shadow: 5px 5px black;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        z-index: 1;
-    }
-    .pageOne {
-        width: 100%;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    .pageOneHide {
-        display: none;
-    }
-    .pageTwo {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    
-    .pageTwoHide {
-        display: none;
     }
 </style>
