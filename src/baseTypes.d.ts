@@ -2,7 +2,8 @@ export declare type PostForm = {
     tag: string[],
     image?: Blob | string | null,
     desc?: string | null,
-    role: 'canvas' | 'artist' | 'shop'
+    role: 'canvas' | 'artist' | 'shop',
+    aspectRatio?: number | string | null
 }
 
 export declare type Post = {

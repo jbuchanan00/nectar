@@ -1,61 +1,54 @@
 <script>
+    import Post from "./post.svelte";
     let {formData} = $props()
 
 </script>
 
 <div class="modalContainer">
-    <div class="modal">
-        <div class="postContainer">
-            <div class="imageContainer">
-                <img src={formData.image} alt="post" />
-            </div>
-            <div class="infoContainer">
-                <h3>{formData.title}</h3>
-                <p>{formData.description}</p>
-            </div>
+    <div class="previewHeading">
+        <div class="title">
+            <h2>PREVIEW YOUR POST</h2>
         </div>
+        <div class="subtitle">
+            <h5>Take a final look before sharing!</h5>
+        </div>
+    </div>
+    <div class="post">
+        <Post {formData}/>
     </div>
 </div>
 
 <style>
-    p {
-        font-size: .75em;
-    }
-    h3 {
+    .title {
+        letter-spacing: -.2em;
+        font-size: .9em;
         font-weight: bolder;
     }
-    .infoContainer {
-        margin-top: 10px;
-        width: 85%;
+    .title, .subtitle {
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .postContainer {
+    .subtitle {
+        color: #4b5563;
+        letter-spacing: -.1em;
+        align-items: start;
+    }
+    .previewHeading {
+        height: 75px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
-        margin-top: 25px;
     }
-    .imageContainer {
-        width: 85%;
-        padding-bottom: 20px;
-        border-bottom: 5px solid black;
-    }
-    .postContainer img {
-        width: 100%;
-        border-radius: 5px;
-        border: 2px solid #000;
-        transform: rotate(-2deg);
-        box-shadow: 5px 5px;
-    }
-    .modal {
-        background-color: #ff6b6b;
-        width: 100%;
-        height: 90%;
-        border-radius: 10px;
-        border: 2px solid black;
-        overflow-y: auto;
+    .post {
+        display: flex;
+        justify-content: center;
     }
     .modalContainer {
-        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
+
 </style>

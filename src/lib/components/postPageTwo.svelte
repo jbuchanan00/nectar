@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {artist, canvas, heartEyes} from '$lib/assets/icons'
 
 	let newTag = $state('')
 
@@ -7,13 +6,8 @@
 
     function triggerChange(event: FocusEvent){
         const target = event.target as HTMLInputElement
-			target.value ? formChange(target.name, target.value) : null
+		formChange(target.name, target.value ?? '')
     }
-
-	function triggerRadioChange(event: FocusEvent ): void{
-		const target = event["target"]as HTMLInputElement
-        target.value ? formChange('role', target.value) : null
-	}
 
 	function handleTagAdd(){
 		formChange('tag', newTag)
@@ -21,118 +15,122 @@
 	}
 </script>
 
-
-<div class="form_group">
-	<label for="description">Description</label>
-	<textarea name="description" id="description" placeholder="Enter description for post" rows=5 class="form_style" onblur={triggerChange}></textarea>
-</div>
-<div class="form_group">
-	<label for="tags">Tags</label>
-	<input name="tags" type="text" id="title" placeholder="Add post tags" class="form_style" bind:value={newTag}/>
-	{#each tags as tag}
-		<p>{tag}</p>
-	{/each}
-	<button type='button' class="addTagButton" onclick={handleTagAdd}>Add</button>
-</div>
-<div id="options" class="form_group" onblur={triggerChange}>
-	<fieldset >
-		<legend class="sub_title">What was your role</legend>
-		<input type="radio" name="radio" value="Canvas" id="canvas" onblur={triggerRadioChange} defaultChecked/>
-		<label for="canvas"><img src={canvas} alt="canvas" /><span>Canvas</span></label>
-		<input type="radio" name="radio" value="Artist" id="artist" onblur={triggerRadioChange}/>
-		<label for="artist"><img src={artist} alt="artist" /><span>Artist</span></label>
-		<input type="radio" name="radio" value="Neither" id="neither" onblur={triggerRadioChange}/>
-		<label for="neither"><img src={heartEyes} alt="interested" /><span>Inspired</span></label>
-	</fieldset>
+<div class="body">
+	<div class="heading">
+		<div class="title">
+			<h2>ADD DETAILS</h2>
+		</div>
+		<div class="subtitle">
+			<h4>Tell your story and add some context!</h4>
+		</div>
+	</div>
+	<div class="input_groups">
+		<label for="description">Caption</label>
+		<textarea name="description" id="description" placeholder="What's on your mind? Share your story..." rows=5 class="form_style" onblur={triggerChange}></textarea>
+	</div>
+	<div class="input_groups">
+		<label for="tags">Tags</label>
+		<div class="taggingAdding">
+			<div class="form_group">
+				<input name="tags" type="text" id="title" placeholder="Add post tags" class="form_style" bind:value={newTag}/>
+			</div>
+			<div class="addingTag">
+				<button type='button' class="addTagButton" onclick={handleTagAdd}>ADD</button>
+			</div>
+		</div>
+		<div class="tagList">
+			{#each tags as tag}
+			<div class="tag">
+				<p>#{tag}</p>
+			</div>
+			{/each}
+		</div>
+		
+	</div>
 </div>
 
 <style>
+	.title {
+		font-size: .75em;
+		font-weight: bolder;
+		letter-spacing: -.2em;
+		height: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.subtitle {
+		font-size: .75em;
+		height: 50%;
+		color: #4b5563;
+	}
+	.heading {
+		height: 100px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+	}
+	.tag {
+		font-size: .6em;
+		margin: 5px;
+		padding: 3px;
+		border: 2px solid black;
+		box-shadow: 2px 2px black;
+		background-color: #fde047;
+		font-weight: bolder;
+	}
+	.tagList {
+		flex-wrap: wrap;
+		display: flex;
+
+	}
+	#description {
+		margin-top: 7px;
+	}
+	.form_group {
+		width: 100%;
+	}
+	.addTagButton {
+		width: 100%;
+		height: 100%;
+		background-color: #3b82f6;
+		color: white;
+		border: 3px solid black;
+		box-shadow: 3px 3px black;
+		font-weight: bolder;
+		font-size: small;
+	}
+	.addingTag {
+		width: 25%;
+		height: 50px;
+		margin: 7px;
+	}
+	.taggingAdding {
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+	.input_groups {
+		width: 90%;
+		margin-bottom: 20px;
+	}
+	.body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
     .form_style {
-        outline: none;
-		border: 2px solid #264143;
-		box-shadow: 3px 4px 0px 1px #e99f4c;
-		width: 290px;
+		width: 100%;
 		padding: 12px 10px;
-		border-radius: 4px;
 		font-size: 15px
     }
-    textarea {
+    textarea, input {
         resize: none;
-    }
-    .sub_title {
-		font-weight: 600;
-		margin: 5px 0;
-	}
-    fieldset {
-        width: 100%;
-    }
-    fieldset img {
-        width: 100%;
-        padding: 5px;
-    }
-    input, textarea {
-		background-color: #DAF5F0;
-	}
-	input[type="radio"] {
-		opacity:0;
-		position: absolute;
-	}
-	input[type="radio"]:checked + label {
-		background-color: #e99f4c;
-	}
-	fieldset label:nth-child(3) {
-		border-radius: 5px 0px 0px 5px;
-        border-right: none;
-	}
-	fieldset label:nth-child(7) {
-		border-radius: 0px 5px 5px 0px;
-        border-left: none;
-	}
-	fieldset label {
-		z-index: 2;
-		display: flex;
-        flex-direction: column;
-		width: 34%;
-		height: 125px;
-		cursor: pointer;
-		border: 2px solid #000;
-		background-color: #eddcd9;
-        font-size: .75em;
-        font-weight: bold;
-        text-align: center;
-	}
-	fieldset label:active {
-		transform: translateY(1px);
-	}
-	#options fieldset{
-		display: flex;
-		position: relative;
-		width: 100%;
-		border-radius: 10px;
-        border: none;
-	}
-	#options fieldset::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 100%; /* Only cover the bottom half */
-		border-radius: 10px;
-		box-shadow: 5px 5px #e99f4c;
-		z-index: 0;
-	}
-    #options{
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-	}
-    .form_group {
-        margin: 10px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+		border: 3px solid black;
+		box-shadow: 3px 3px black;
+		color: #4b5563;
+		font-weight: bolder;
     }
 </style>

@@ -1,8 +1,9 @@
 <script lang="ts">
     import { base } from "$app/paths";
+	import { onMount } from "svelte";
     let fileInput: HTMLInputElement | null = null
     let previewImage: string | null = $state(null)
-    let {formChange} = $props()
+    let {formChange, image} = $props()
 
     function triggerImageUpload(){
         fileInput?.click()
@@ -11,6 +12,7 @@
     function handleImageChange(event: Event){
         const target = event.target as HTMLInputElement
         const file = target.files?.[0]
+        
         if(file){
             const reader = new FileReader()
             reader.onload = () => {
@@ -18,9 +20,12 @@
                 formChange('image', previewImage)
             }
             reader.readAsDataURL(file)
-            
         }
     }
+
+    onMount(() => {
+        previewImage = image || null
+    })
 </script>
 
 <div>
@@ -32,13 +37,13 @@
         <input type="file" id="imagePicker" accept=".jpg,.png,.svg,.heic" bind:this={fileInput} onchange={handleImageChange}/>
         
          {#if previewImage}
-         <button class="changePhoto" onclick={triggerImageUpload}>
+         <button type="button" class="changePhoto" onclick={triggerImageUpload}>
              <img src={previewImage} alt="placeholder" class="postImageExists"/>
          </button>
         {:else}
         <div class="postImage">
             <div class="action" >
-                <button class="iconButton" onclick={triggerImageUpload}>
+                <button type="button" class="iconButton" onclick={triggerImageUpload}>
                     <img src={`${base}/icons/upload.svg`} alt="upload" />
                 </button>
                 <div class="clickToChoose">

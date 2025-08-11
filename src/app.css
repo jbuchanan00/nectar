@@ -21,7 +21,7 @@ html, body {
 
 @font-face {
 	font-family: 'NEO';
-	src: url('./lib/assets/Lexend_Mega/LexendMega-VariableFont_wght.ttf') format('truetype');
+	src: url('./lib/assets/Sora/Sora-VariableFont_wght.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
