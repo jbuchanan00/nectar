@@ -1,11 +1,9 @@
-import { error } from '@sveltejs/kit'
-import {mkdir, writeFile} from 'node:fs/promises'
-import path from 'node:path'
+import { redirect, type Actions } from '@sveltejs/kit'
 import { insertPost } from '$lib/db/handlers/posts/insertPost.js'
-import type { Post, PostTags, Role } from '../../baseTypes.js'
+import type { Post, PostTags } from '../baseTypes.js'
 
-export const actions = {
-    upload: async ({request, locals}) => {
+export const actions: Actions = {
+    upload: async ({request, locals, fetch}) => {
         const formData = await request.formData()
         let imageData = formData?.get('image') as string
         if(imageData === null){
@@ -26,29 +24,29 @@ export const actions = {
             }
         }
         const form = Object.fromEntries(formData)
- 
+        console.log('FORM', form)
         const uuidForImage = crypto.randomUUID()
         
         const filename = `${uuidForImage}.${extension}`
-        const uploadDir = process.env.UPLOAD_DIR ?? '/app/uploads/'
-        const fullPath = path.join(uploadDir, filename)
         const bytes = Buffer.from(raw, 'base64')
 
-        try{
-            await mkdir(`${uploadDir}`, {recursive: true})
-            await writeFile(fullPath, bytes)
-        }catch(e){
-            console.error('Failed to save image to disk', e)
-            throw error(401, {message: "Error saving image"})
+        const response = await fetch("api/imageupload", {
+            method: "POST",
+            body: JSON.stringify({filename, data: bytes})
+        })
+
+        if(!response.ok){
+            console.error("Error in processing image upload", response.status)
+            throw redirect(300, '/')
         }
         console.log('SUCCESS')
-        const { tags, description, radio } = form
+        const { tags, description, role } = form
         const parsedTags: PostTags = JSON.parse(tags as string)
         const newPost: Post = {
             id: crypto.randomUUID(),
             createdAt: new Date(),
             updatedAt: null,
-            role: radio.toString().toLowerCase() as Role,
+            role: parseInt(role as string),
             mediaType: determineMediaType(extension),
             mediaId: uuidForImage,
             body: description as string,

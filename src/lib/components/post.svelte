@@ -2,7 +2,7 @@
     let aspectRatio = $state(0)
     const {formData} = $props()
     const {totalForm} = formData
-    console.log(totalForm.desc)
+    
     import { base } from "$app/paths";
 	import { onMount } from "svelte";
 	import Tag from "./tag.svelte";
@@ -12,6 +12,7 @@
         img.src = totalForm.image;
         aspectRatio = img.naturalWidth / img.naturalHeight;
         aspectRatio = aspectRatio < .9 ? .8 : aspectRatio < 1.5 ? 1 : 1.91
+        console.log(aspectRatio)
     })
 </script>
 
@@ -27,7 +28,7 @@
             </div>
         </div>
         <div class="more">
-            <button class="moreButton standardCont"><img src={`${base}/icons/menu-dots.png`} alt="more" /></button>
+            <button type="button" class="moreButton standardCont"><img src={`${base}/icons/menu-dots.png`} alt="more" /></button>
         </div>
     </div>
     <div class="body">
@@ -35,12 +36,12 @@
     </div>
     <div class="actions">
         <div class="leftButtons">
-            <button class="actionButton standardCont"><img src={`${base}/icons/heart.svg`} alt="heart" /></button>
-            <button class="actionButton standardCont"><img src={`${base}/icons/comment.svg`} alt="comment" /></button>
-            <button class="actionButton standardCont"><img src={`${base}/icons/upload.svg`} alt="share" /></button>
+            <button type="button" class="actionButton standardCont"><img src={`${base}/icons/heart.svg`} alt="heart" /></button>
+            <button type="button" class="actionButton standardCont"><img src={`${base}/icons/comment.svg`} alt="comment" /></button>
+            <button type="button" class="actionButton standardCont"><img src={`${base}/icons/upload.svg`} alt="share" /></button>
         </div>
         <div class="rightButton">
-            <button class="actionButton standardCont"><img src={`${base}/icons/bookmark.svg`} alt="bookmark" /></button>
+            <button type="button" class="actionButton standardCont"><img src={`${base}/icons/bookmark.svg`} alt="bookmark" /></button>
         </div>
     </div>
     <div class="metadata">
@@ -160,7 +161,7 @@
     }
     .body img {
         width: 100%;
-        aspect-ratio: var(--aspectRatio);
+        aspect-ratio: --var(aspect-ratio);
         object-fit: cover;
         border-bottom: 3px solid black;
     }

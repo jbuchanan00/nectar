@@ -1,8 +1,8 @@
 export declare type PostForm = {
     tag: string[],
     image?: Blob | string | null,
-    desc?: string | null,
-    role: 'canvas' | 'artist' | 'shop',
+    description?: string | null,
+    role: 'canvas' | 'artist' | 'sharing' | number,
     aspectRatio?: number | string | null
 }
 
@@ -25,7 +25,7 @@ export declare type User = {
 
 export declare type PostTags = string[]
 
-export declare type Role = 'canvas' | 'artist' | 'shop'
+export declare type Role = 'canvas' | 'artist' | 'sharing'
 
 export declare type MediaType = 'image' | 'gif' | 'video' | 'slideshow'
 

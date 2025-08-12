@@ -28,6 +28,31 @@
 		<label for="description">Caption</label>
 		<textarea name="description" id="description" placeholder="What's on your mind? Share your story..." rows=5 class="form_style" onblur={triggerChange}></textarea>
 	</div>
+	<div class="roleRadio">
+		<fieldset >
+			<legend>Your Role</legend>
+			<div class="radios">
+				<div class="row">
+					<label for="canvas" >
+						<input type="radio" id="canvas" name="role" value="0" onblur={triggerChange} />
+						Canvas
+					</label>
+				</div>
+				<div class="row">
+					<label for="artist">
+						<input type="radio" id="artist" name="role" value="1" onblur={triggerChange} />
+						Artist
+					</label>
+				</div>
+				<div class="row">
+					<label for="share">
+						<input type="radio" id="share" name="role" value="2" checked onblur={triggerChange}/>
+						Sharing
+					</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
 	<div class="input_groups">
 		<label for="tags">Tags</label>
 		<div class="taggingAdding">
@@ -37,6 +62,7 @@
 			<div class="addingTag">
 				<button type='button' class="addTagButton" onclick={handleTagAdd}>ADD</button>
 			</div>
+			
 		</div>
 		<div class="tagList">
 			{#each tags as tag}
@@ -50,6 +76,40 @@
 </div>
 
 <style>
+	input[type="radio"]{
+		color: black;
+		box-shadow: none;
+		margin: 10px;
+		appearance: none;
+
+		border-radius: 50%;
+		width: 16px;
+		height: 16px;
+
+		border: 3px solid black;
+		transition: 0.2s all linear;
+	}
+	input[type="radio"]:checked {
+		background-color: black;
+	}
+	.row label{
+		display: flex;
+		align-items: center;
+		border: 3px solid #000;
+		height: 50px;
+		box-shadow: 3px 3px black;
+		margin-bottom: 10px;
+	}
+	.row:active {
+		box-shadow: none;
+		transform: translateX(3px) translateY(3px);
+	}
+	.roleRadio fieldset {
+		border: none;
+	}
+	.roleRadio {
+		width: 90%;
+	}
 	.title {
 		font-size: .75em;
 		font-weight: bolder;

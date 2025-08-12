@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {PostForm, Role} from '../../baseTypes'
+    import type {PostForm, Role} from '../baseTypes'
     import { base } from '$app/paths';
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
@@ -8,7 +8,7 @@
     let initPageNum: number | null = 1
     
     let pageNum = $state(initPageNum)
-    let totalForm: PostForm = $state({role: 'canvas', tag: ['hello', 'tags']})
+    let totalForm: PostForm = $state({role: 2, tag: []})
 
     function handleNext(){
         pageNum += 1
@@ -16,8 +16,8 @@
     function handlePrevious(){
         pageNum -= 1
     }
-    function handleFormChange(input: 'tag' | 'image' | 'desc' | 'role' | 'aspectRatio', value: string){
-        console.log("CHANGED", input, value)
+    function handleFormChange(input: 'tag' | 'image' | 'description' | 'role' | 'aspectRatio', value: string){
+        console.log("CHANGED", input, totalForm.description)
         if(input === 'tag'){
             totalForm['tag'].push(value)
         }else if(input === 'role'){
@@ -29,6 +29,7 @@
     }
     function handleSubmit(event: { action: URL; formData: FormData; formElement: HTMLFormElement; controller: AbortController; submitter: HTMLElement | null; cancel: () => void; }){
         const defaultForm = event.formData
+        console.log('FORM', defaultForm)
         defaultForm.delete('tags')
 
         if(totalForm['image']){
@@ -37,6 +38,12 @@
         
         if(totalForm['tag']){
             defaultForm.append('tags', JSON.stringify(totalForm['tag']))
+        }
+        if(totalForm['description']){
+            defaultForm.append('description', totalForm['description'])
+        }
+        if(totalForm['role']){
+            defaultForm.append('role', totalForm['role'].toString())
         }
     }
 </script>
@@ -87,6 +94,9 @@
 </div>
 
 <style>
+    form {
+        width: 100%;
+    }
     .submitButtons {
         width: 100%;
         display: flex;

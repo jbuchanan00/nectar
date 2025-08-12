@@ -16,7 +16,7 @@ declare global {
 	declare type PostForm = {
 			title?: string | null,
 			image?: string | null,
-			desc?: string | null
+			description?: string | null
 		}
 }
 

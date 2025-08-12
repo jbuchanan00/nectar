@@ -13,7 +13,14 @@ services:
       - NODE_ENV=development
       - REDIS_URL=redis://redis:6379 
       - UPLOAD_DIR=/app/uploads
+      - GRPC_IMAGE_HOST=host.docker.internal
+      - GRPC_IMAGE_PORT=9090
+      - GRPC_TLS="0"
+      - PROTO_PATH=/app/protos/image_service.proto
     env_file: .env
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - shared
 
@@ -23,6 +30,8 @@ services:
     container_name: post_redis_dev
     ports:
       - "6379:6379"
+    networks:
+      - shared
 
 networks:
   shared:
