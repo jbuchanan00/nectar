@@ -39,7 +39,7 @@ export const actions: Actions = {
             console.error("Error in processing image upload", response.status)
             throw redirect(300, '/')
         }
-        console.log('SUCCESS')
+        console.log('SUCCESS UPLOADING IMAGE')
         const { tags, description, role } = form
         const parsedTags: PostTags = JSON.parse(tags as string)
         const newPost: Post = {

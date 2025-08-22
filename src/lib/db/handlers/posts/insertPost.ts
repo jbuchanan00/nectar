@@ -23,7 +23,9 @@ const insertPost = async (db: PoolClient, postMessage: Post, tags: PostTags): Pr
         }
     }
     const values = listOfTags.map((item) => {return [Number(item), postMessage.id]})
-    await db.query(sqlPostTagQuery, values.flat())
+    await db.query(sqlPostTagQuery, values.flat()).catch(e => {
+        console.error("Error uploading post, ", e)
+    })
 }
 
 

@@ -3,13 +3,11 @@ import { getImageServiceClient } from "$lib/server/grpc/client";
 import {Metadata} from "@grpc/grpc-js";
 
 export const POST: RequestHandler = async ({request}): Promise<Response> => {
-    console.log('REACHED THE POST')
     const {filename, data} = await request.json();
     const client = getImageServiceClient()
 
     const deadline = new Date(Date.now() + 5_000)
     const md = new Metadata()
-    console.log('In the post', filename, data.data)
     const result = await new Promise<{status: String; optimized_url: string;}>((resolve, reject) => {
         (client as any).uploadImage({filename, data: data.data}, md, {deadline}, (err: any, resp: any) => {
             if(err){
