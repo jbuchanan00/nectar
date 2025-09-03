@@ -9,8 +9,16 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
+		"types": ["svelte", "vite/client"],
 		"moduleResolution": "bundler"
-	}
+	},
+	"include": [
+    "src",
+    "svelte.config.js",
+    "vite.config.ts",
+    ".svelte-kit/types",
+    ".svelte-kit/ambient.d.ts"
+  ]
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
 	//

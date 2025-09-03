@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { base } from "$app/paths";
+    import {resolve} from '$app/paths'
 	import { onMount } from "svelte";
     let fileInput: HTMLInputElement | null = null
-    let previewImage: string | null = $state(null)
+    let previewImage = $state<string | null>(null)
     let {formChange, image} = $props()
 
     function triggerImageUpload(){
@@ -44,7 +44,7 @@
         <div class="postImage">
             <div class="action" >
                 <button type="button" class="iconButton" onclick={triggerImageUpload}>
-                    <img src={`${base}/icons/upload.svg`} alt="upload" />
+                    <img src={`${resolve(`/icons/upload.svg`, {'': ''})}`} alt="upload" />
                 </button>
                 <div class="clickToChoose">
                     Click to Choose
