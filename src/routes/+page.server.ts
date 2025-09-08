@@ -48,13 +48,14 @@ export const actions: Actions = {
             updatedAt: null,
             role: parseInt(role as string),
             mediaType: determineMediaType(extension),
-            mediaId: uuidForImage,
             body: description as string,
             likeCount: 0
         }
 
         try{
-            await insertPost(locals.db, newPost, parsedTags)
+            const pool = await locals.db()
+            await insertPost(pool, newPost, parsedTags)
+            pool.release()
         }catch(e){
             console.error(`Failed to insert post, ${e}`)
         }        

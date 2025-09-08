@@ -12,7 +12,6 @@ export declare type Post = {
     updatedAt: Date | string | number | null,
     role: Role | number,
     mediaType: MediaType | number,
-    mediaId: string,
     body: string,
     likeCount: number
 }
