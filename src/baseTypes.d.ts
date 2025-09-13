@@ -13,7 +13,7 @@ export declare type Post = {
     role: Role | number,
     mediaType: MediaType | number,
     body: string,
-    likeCount: number
+    userId: string
 }
 
 export declare type User = {

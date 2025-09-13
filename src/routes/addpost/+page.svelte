@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {PostForm, Role} from '../baseTypes'
+    import type {PostForm, Role} from '../../baseTypes'
     import { base } from '$app/paths';
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
@@ -17,7 +17,7 @@
         pageNum -= 1
     }
     function handleFormChange(input: 'tag' | 'image' | 'description' | 'role' | 'aspectRatio', value: string){
-        console.log("CHANGED", input, totalForm.description)
+        
         if(input === 'tag'){
             totalForm['tag'].push(value)
         }else if(input === 'role'){

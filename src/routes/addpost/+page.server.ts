@@ -1,6 +1,6 @@
 import { redirect, type Actions } from '@sveltejs/kit'
 import { insertPost } from '$lib/db/handlers/posts/insertPost.js'
-import type { Post, PostTags } from '../baseTypes.js'
+import type { Post, PostTags } from '../../baseTypes.js'
 
 export const actions: Actions = {
     upload: async ({request, locals, fetch}) => {
@@ -24,7 +24,6 @@ export const actions: Actions = {
             }
         }
         const form = Object.fromEntries(formData)
-        console.log('FORM', form)
         const uuidForImage = crypto.randomUUID()
         
         const filename = `${uuidForImage}.${extension}`
@@ -49,7 +48,7 @@ export const actions: Actions = {
             role: parseInt(role as string),
             mediaType: determineMediaType(extension),
             body: description as string,
-            likeCount: 0
+            userId: ''
         }
 
         try{
