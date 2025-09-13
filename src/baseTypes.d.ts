@@ -11,7 +11,7 @@ export declare type Post = {
     createdAt: Date | string | number,
     updatedAt: Date | string | number | null,
     role: Role | number,
-    mediaType: MediaType | number,
+    mediaType: MediaType | number | null,
     body: string,
     userId: string
 }
