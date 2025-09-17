@@ -9,7 +9,8 @@ export default defineConfig({
 		cors: true,
 		watch: {
 			usePolling: true,
-		}
+		},
+		allowedHosts: ["swift-pants-run.loca.lt", "three-phones-begin.loca.lt"]
 	},
 	test: {
 		workspace: [
