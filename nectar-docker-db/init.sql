@@ -20,9 +20,8 @@ CREATE TABLE IF NOT EXISTS post (
     updated_at TIMESTAMP,
     role_id INTEGER NOT NULL REFERENCES role(id),
     media_type_id INTEGER NOT NULL REFERENCES media_type(id),
-    media_id VARCHAR NOT NULL,
     body VARCHAR,
-    like_count INTEGER
+    user_id VARCHAR NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS post_tag (
@@ -35,25 +34,6 @@ CREATE TABLE IF NOT EXISTS post_image (
     post_id VARCHAR REFERENCES post(id),
     CONSTRAINT post_image_pkey PRIMARY KEY(image_id, post_id)
 );
-
-CREATE TABLE IF NOT EXISTS account (
-    id VARCHAR PRIMARY KEY,
-    username VARCHAR NOT NULL,
-    role_id INTEGER NOT NULL REFERENCES role(id)
-);
-
-CREATE TABLE IF NOT EXISTS user_post (
-    post_id VARCHAR,
-    user_Id VARCHAR
-);
-
-CREATE TABLE IF NOT EXISTS post_like (
-    post_id VARCHAR,
-    user_Id VARCHAR
-);
-
-ALTER TABLE user_post ADD CONSTRAINT "user_post_pkey" PRIMARY KEY (post_id, user_id);
-ALTER TABLE post_like ADD CONSTRAINT "post_like_pkey" PRIMARY KEY (post_id, user_id);
 
 INSERT INTO role (role_name) VALUES ('canvas'), ('artist'), ('shop');
 

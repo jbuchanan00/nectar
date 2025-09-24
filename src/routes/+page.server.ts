@@ -24,7 +24,6 @@ export const actions: Actions = {
             }
         }
         const form = Object.fromEntries(formData)
-        console.log('FORM', form)
         const uuidForImage = crypto.randomUUID()
         
         const filename = `${uuidForImage}.${extension}`
