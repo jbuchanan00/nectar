@@ -11,10 +11,9 @@ export declare type Post = {
     createdAt: Date | string | number,
     updatedAt: Date | string | number | null,
     role: Role | number,
-    mediaType: MediaType | number,
-    mediaId: string,
+    mediaType: MediaType | number | null,
     body: string,
-    likeCount: number
+    userId: string
 }
 
 export declare type User = {

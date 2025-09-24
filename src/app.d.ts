@@ -6,7 +6,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			db: PoolClient
+			db: () => Promise<PoolClient>
 		}
 		// interface PageData {}
 		// interface PageState {}

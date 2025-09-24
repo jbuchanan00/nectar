@@ -12,7 +12,6 @@
         img.src = totalForm.image;
         aspectRatio = img.naturalWidth / img.naturalHeight;
         aspectRatio = aspectRatio < .9 ? .8 : aspectRatio < 1.5 ? 1 : 1.91
-        console.log(aspectRatio)
     })
 </script>
 
