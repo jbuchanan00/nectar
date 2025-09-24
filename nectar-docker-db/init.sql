@@ -24,6 +24,16 @@ CREATE TABLE IF NOT EXISTS post (
     user_id VARCHAR NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS instagram_post (
+  id VARCHAR PRIMARY KEY,
+  created_at TIMESTAMP NOT NULL,
+  user_id VARCHAR NOT NULL,
+  media_type TEXT NOT NULL,
+  permalink TEXT NOT NULL,
+  caption TEXT,
+  view_count INTEGER
+)
+
 CREATE TABLE IF NOT EXISTS post_tag (
     tag_id INTEGER REFERENCES tag(id),
     post_id VARCHAR REFERENCES post(id)
