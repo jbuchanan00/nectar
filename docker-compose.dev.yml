@@ -24,14 +24,14 @@ services:
     networks:
       - shared
 
-  redis:
-    image: redis:8.0.2
-    restart: always
-    container_name: post_redis_dev
-    ports:
-      - "6379:6379"
-    networks:
-      - shared
+  # redis:
+  #   image: redis:8.0.2
+  #   restart: always
+  #   container_name: post_redis_dev
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - shared
 
 networks:
   shared:
