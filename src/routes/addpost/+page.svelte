@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {PostForm, Role} from '../../baseTypes'
-    import { base } from '$app/paths';
+    import { resolve } from '$app/paths';
     
     import {postPageOne as PageOne, postPageTwo as PageTwo, previewPage as PreviewPage} from '$lib/components'
 	import { enhance } from '$app/forms';
@@ -70,22 +70,22 @@
         <div class="buttons">
             {#if pageNum === 1}
             <div class="navigationButton">
-                <button onclick={handleNext} class="nextStep" disabled={!totalForm["image"]}>NEXT STEP<img src={`${base}/icons/right-arrow.svg`} alt="right-arrow" /></button>
+                <button onclick={handleNext} class="nextStep" disabled={!totalForm["image"]}>NEXT STEP<img src={resolve('/icons/right-arrow.svg', {none: ''})} alt="right-arrow" /></button>
             </div>
             {:else if pageNum === 2}
             <div class="button">
-                <button onclick={handlePrevious} class="backButton"><img src={`${base}/icons/right-arrow.svg`} alt="left-arrow" />BACK</button>
+                <button onclick={handlePrevious} class="backButton"><img src={`/icons/right-arrow.svg`} alt="left-arrow" />BACK</button>
             </div>
             <div class="button">
-                <button onclick={handleNext} class="previewButton">PREVIEW <img src={`${base}/icons/right-arrow.svg`} alt="right-arrow"/></button>
+                <button onclick={handleNext} class="previewButton">PREVIEW <img src={resolve(`/icons/right-arrow.svg`, {none: ''})} alt="right-arrow"/></button>
             </div>
             {:else}
             <div class="submitButtons">
                 <div class="postSubmit">
-                    <button class="previewButton" id="postButton" type="submit"><img src={`${base}/icons/rocket.svg`} alt="clapping"/>POST IT NOW</button>
+                    <button class="previewButton" id="postButton" type="submit"><img src={resolve(`/icons/rocket.svg`, {none: ''})} alt="clapping"/>POST IT NOW</button>
                 </div>
                 <div class="backToEdit">
-                    <button class="backButton" onclick={handlePrevious}><img src={`${base}/icons/right-arrow.svg`} alt="back" />BACK TO EDIT</button>
+                    <button class="backButton" onclick={handlePrevious}><img src={resolve(`/icons/right-arrow.svg`, {none: ''})} alt="back" />BACK TO EDIT</button>
                 </div>
             </div>
             {/if}
