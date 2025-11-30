@@ -1,3 +1,4 @@
+import { resolve } from "node:path"
 
 
 export async function handlePostImage(image: string){
@@ -20,18 +21,15 @@ export async function handlePostImage(image: string){
         
         const filename = `${uuidForImage}.${extension}`
         const bytes = Buffer.from(raw, 'base64')
+        console.log('About to call the image upload service')        
+        const response = await fetch(resolve("/imageupload"), {
+            method: "POST",
+            body: JSON.stringify({filename, data: bytes})
+        })
 
-        if(process.env.ENVIRONMENT !== "production"){
-                
-            const response = await fetch("api/imageupload", {
-                method: "POST",
-                body: JSON.stringify({filename, data: bytes})
-            })
-
-            if(!response.ok){
-                console.error("Error in processing image upload", response.status)
-                return false
-            }
+        if(!response.ok){
+            console.error("Error in processing image upload", response.status)
+            return false
         }
         console.log('SUCCESS UPLOADING IMAGE')
         return determineMediaType(extension)

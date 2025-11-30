@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { loadRemoteNavbars } from "$lib/handleRemotes/remoteNavbars";
-    import { PUBLIC_POLESTAR_URL } from '$env/static/public'
+    import { PUBLIC_POLESTAR_BASE } from '$env/static/public'
 
 	let { children } = $props();
 
@@ -13,8 +13,8 @@
                 const topNavElement = document.getElementById('top-nav')
                 const bottomNavElement = document.getElementById('bottom-nav')
                 const remote = await loadRemoteNavbars()
-                if(topNavElement) remote.TopNavInstance(topNavElement, {assetBase: PUBLIC_POLESTAR_URL})
-                if(bottomNavElement) remote.BottomNavInstance(bottomNavElement, {assetBase: PUBLIC_POLESTAR_URL})
+                if(topNavElement) remote.TopNavInstance(topNavElement, {assetBase: PUBLIC_POLESTAR_BASE})
+                if(bottomNavElement) remote.BottomNavInstance(bottomNavElement, {assetBase: PUBLIC_POLESTAR_BASE})
             }
         }catch(e){
             console.error(`Failed to load remote navbars`, e)

@@ -74,7 +74,7 @@
             </div>
             {:else if pageNum === 2}
             <div class="button">
-                <button onclick={handlePrevious} class="backButton"><img src={`/icons/right-arrow.svg`} alt="left-arrow" />BACK</button>
+                <button onclick={handlePrevious} class="backButton"><img src={resolve('/icons/right-arrow.svg', {none: ''})} alt="left-arrow" />BACK</button>
             </div>
             <div class="button">
                 <button onclick={handleNext} class="previewButton">PREVIEW <img src={resolve(`/icons/right-arrow.svg`, {none: ''})} alt="right-arrow"/></button>
