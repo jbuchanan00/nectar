@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS instagram_post (
   permalink TEXT NOT NULL,
   caption TEXT,
   view_count INTEGER
-)
+);
 
 CREATE TABLE IF NOT EXISTS post_tag (
     tag_id INTEGER REFERENCES tag(id),

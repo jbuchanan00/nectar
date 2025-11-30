@@ -2,7 +2,7 @@ import { resolve } from "node:path"
 
 
 export async function handlePostImage(image: string){
-        
+        console.log('We are in the handle post image function')
         let [mime, raw] = image.split(',', 2)
         let [imageType] = mime.split(';', 1)
         const extension = imageType.split('/')[1] ?? 'bin'

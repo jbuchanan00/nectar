@@ -22,7 +22,7 @@ export const actions: Actions = {
             body: description as string,
             userId: ''
         }
-
+        console.log('Post:', JSON.stringify(newPost))
         try{
             const pool = await locals.db()
             await addPost(pool, newPost, imageData, parsedTags)
