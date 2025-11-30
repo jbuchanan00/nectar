@@ -28,7 +28,7 @@ export const actions: Actions = {
             await addPost(pool, newPost, imageData, parsedTags)
             pool.release()
         }catch(e){
-            console.error(`Failed to insert post, ${e}`)
+            console.error(`Failed to insert post, ${JSON.stringify(e)}`)
         }  
         throw redirect(300, '/')      
     }

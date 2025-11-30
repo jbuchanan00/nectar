@@ -5,7 +5,7 @@ import {Metadata} from "@grpc/grpc-js";
 export const POST: RequestHandler = async ({request}): Promise<Response> => {
     const {filename, data} = await request.json();
     const client = getImageServiceClient()
-    console.log('After getting the client and ready to send grpc')
+    console.log('After getting the client and ready to send grpc. Client:', client)
     const deadline = new Date(Date.now() + 5_000)
     const md = new Metadata()
     const result = await new Promise<{status: String; optimized_url: string;}>((resolve, reject) => {
