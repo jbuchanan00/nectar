@@ -7,14 +7,16 @@ export const POST: RequestHandler = async ({request, locals}) => {
 
     try{
         const pool = await locals.db()
-        const res = await addPost(pool, postPayload, image, tags)
-        if(!res){
-            throw new Error(`Couldn't add post`)
+        try{
+            await addPost(pool, postPayload, image, tags)
+        }catch(e){
+            return new Response(`Couldn't add post ${e}`)
         }
+
         pool.release()
     }catch(e){
         console.log('Error posting in post', e)
-        throw new Error(`Couldn't complete post`)
+        return new Response(`Couldn't complete post`)
     }
     return new Response()
 }

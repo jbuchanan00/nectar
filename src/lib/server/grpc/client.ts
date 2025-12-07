@@ -7,6 +7,7 @@ const PROTO_PATH = path.resolve("protos/image_service.proto")
 let _client: any | null = null
 
 export function getImageServiceClient(){
+    console.log('Getting Image Service Client')
     if(_client) return _client;
 
     const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -17,9 +18,10 @@ export function getImageServiceClient(){
         oneofs: true,
         includeDirs: [path.resolve("protos")]
     })
+    console.log('After assigning package definition')
 
     const protoDesc = (loadPackageDefinition(packageDefinition) as any).image.v1
-
+    console.log('After loading package definition')
     const host = process.env.GRPC_IMAGE_HOST ?? "localhost";
     const port = process.env.GRPC_IMAGE_PORT ?? 9090;
 
@@ -27,8 +29,8 @@ export function getImageServiceClient(){
     process.env.GRPC_TSL == "1"
         ? credentials.createSsl()
         : credentials.createInsecure();
-
+    console.log('After creating credentials')
     _client = new protoDesc.ImageService(`${host}:${port}`, creds) as Client;
-
+    console.log('After assigning client to the image service')
     return _client;
 }

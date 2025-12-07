@@ -20,7 +20,7 @@ export async function handlePostImage(image: string){
         
         const filename = `${uuidForImage}.${extension}`
         const bytes = Buffer.from(raw, 'base64')
-             
+        console.log('Preparing to fetch url:', process.env.NECTAR_URL+"/imageupload")
         await fetch(process.env.NECTAR_URL + "/imageupload", {
             method: "POST",
             body: JSON.stringify({filename, data: bytes})

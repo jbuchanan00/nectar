@@ -30,6 +30,6 @@ export const actions: Actions = {
         }catch(e){
             console.error(`Failed to insert post, ${JSON.stringify(e)}`)
         }  
-        throw redirect(300, '/')      
+        throw redirect(307, '/')      
     }
 }
