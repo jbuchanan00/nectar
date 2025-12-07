@@ -12,6 +12,10 @@ export async function addPost(db: PoolClient, postPayload: Post, image: string, 
         throw new Error("Error gathering media type")
     }
     postPayload.mediaType = mediaType
-    await insertPost(db, postPayload)
-    await insertPostTags(db, tags, postPayload.id)
+    try{
+        await insertPost(db, postPayload)
+        await insertPostTags(db, tags, postPayload.id)
+    }catch(e){
+        console.log('Error Inserting Post To DB', e)
+    }
 }

@@ -1,5 +1,4 @@
-import { resolve } from "node:path"
-
+import { uploadImageToRemote } from "./uploadImageToRemote"
 
 export async function handlePostImage(image: string){
         let [mime, raw] = image.split(',', 2)
@@ -20,17 +19,12 @@ export async function handlePostImage(image: string){
         
         const filename = `${uuidForImage}.${extension}`
         const bytes = Buffer.from(raw, 'base64')
-        console.log('Preparing to fetch url:', process.env.NECTAR_URL+"/imageupload")
-        await fetch(process.env.NECTAR_URL + "/imageupload", {
-            method: "POST",
-            body: JSON.stringify({filename, data: bytes})
-        }).then(res => {
-            console.log('Successful fetch', res)
-        })
-        .catch(rej => {
-            console.log(rej)
-            return
-        })
+        
+        try{
+            uploadImageToRemote(filename, bytes)
+        }catch(e){
+            console.log('Error in uploading image to remote', e)
+        }
 
         return determineMediaType(extension)
 }
