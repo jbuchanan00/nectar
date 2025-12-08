@@ -14,7 +14,9 @@ export async function addPost(db: PoolClient, postPayload: Post, image: string, 
     postPayload.mediaType = mediaType
     try{
         await insertPost(db, postPayload)
-        await insertPostTags(db, tags, postPayload.id)
+        if(tags.length > 0){
+            await insertPostTags(db, tags, postPayload.id)
+        }
     }catch(e){
         console.log('Error Inserting Post To DB', e)
     }

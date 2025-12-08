@@ -6,7 +6,9 @@ import type {Post, PostTags} from '../../../../baseTypes'
 
 
 const insertPost = async (db: PoolClient, postMessage: Post): Promise<void>  => {
-    await convertFieldsToIds(db, postMessage)
+    if(isNaN(postMessage.role as number)){
+        await convertFieldsToIds(db, postMessage)
+    }
     const sqlPostQuery = `INSERT INTO post 
         (id, created_at, updated_at, role_id, media_type_id, body, user_id)
         VALUES
