@@ -1,4 +1,5 @@
 import { uploadImageToRemote } from "./uploadImageToRemote"
+import { insertPostImage } from "$lib/db/handlers"
 
 export async function handlePostImage(image: string){
         let [mime, raw] = image.split(',', 2)
@@ -16,6 +17,12 @@ export async function handlePostImage(image: string){
             }
         }
         const uuidForImage = crypto.randomUUID()
+
+        // try{
+        //     await insertPostImage('', uuidForImage)
+        // }catch(e){
+        //     console.log('Error uploading image id', e)
+        // }
         
         const filename = `${uuidForImage}.${extension}`
         const bytes = Buffer.from(raw, 'base64')

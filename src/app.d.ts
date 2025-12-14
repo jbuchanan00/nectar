@@ -7,6 +7,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			db: () => Promise<PoolClient>
+			userId?: string
 		}
 		// interface PageData {}
 		// interface PageState {}

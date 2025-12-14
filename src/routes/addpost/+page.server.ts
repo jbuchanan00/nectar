@@ -17,10 +17,13 @@ export const actions: Actions = {
             id: crypto.randomUUID(),
             createdAt: new Date(),
             updatedAt: null,
-            role: parseInt(role as string),
+            role: parseInt(role as string) + 1,
             mediaType: null,
             body: description as string,
-            userId: ''
+            userId: 'Not Found'
+        }
+        if(locals.userId){
+            newPost.userId = locals.userId
         }
         console.log('Post:', JSON.stringify(newPost))
         try{

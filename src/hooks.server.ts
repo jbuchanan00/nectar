@@ -1,4 +1,4 @@
 import { sequence } from '@sveltejs/kit/hooks';
-import {withDb} from '$lib/hooks/index'
+import {withDb, attachUserData} from '$lib/hooks/index'
 
-export const handle = sequence(withDb)
+export const handle = sequence(withDb, attachUserData)

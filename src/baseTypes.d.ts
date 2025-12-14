@@ -1,3 +1,5 @@
+
+
 export declare type PostForm = {
     tag: string[],
     image?: Blob | string | null,
@@ -21,6 +23,7 @@ export declare type User = {
     displayName: string,
     role: Role
 }
+
 
 export declare type PostTags = string[]
 
