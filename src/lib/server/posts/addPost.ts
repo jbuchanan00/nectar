@@ -7,7 +7,7 @@ import { insertPostTags } from "$lib/db/handlers/tags/insertPostTags";
 
 export async function addPost(db: PoolClient, postPayload: Post, image: string, tags: PostTags){
     console.log('-----ADDING POST-----')
-    let mediaType = await handlePostImage(image)
+    let mediaType = await handlePostImage(db, image, postPayload.id)
     if(!mediaType){
         throw new Error("Error gathering media type")
     }
