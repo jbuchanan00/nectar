@@ -12,7 +12,9 @@ export const getImageFromRemote = (filename: string) => {
             console.error('ERROR', err)
             result = err
         }else {
+            console.log('Successful response:', resp)
             result = resp
         }
     })
+    return result
 }

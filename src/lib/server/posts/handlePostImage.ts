@@ -1,5 +1,5 @@
 import { uploadImageToRemote } from "./uploadImageToRemote"
-import { insertPostImage } from "$lib/db/handlers"
+
 import type { PoolClient } from "pg"
 
 export async function handlePostImage(db: PoolClient, image: string, postId: string){
@@ -20,12 +20,6 @@ export async function handlePostImage(db: PoolClient, image: string, postId: str
         const uuidForImage = crypto.randomUUID()
 
         const filename = `${uuidForImage}.${extension}`
-
-        try{
-            await insertPostImage(db, postId, filename)
-        }catch(e){
-            console.log('Error uploading image id', e)
-        }
         
         const bytes = Buffer.from(raw, 'base64')
         
@@ -35,5 +29,5 @@ export async function handlePostImage(db: PoolClient, image: string, postId: str
             console.log('Error in uploading image to remote', e)
         }
 
-        return determineMediaType(extension)
+        return {mediaType: determineMediaType(extension), ext: extension}
 }
