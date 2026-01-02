@@ -29,5 +29,5 @@ export async function handlePostImage(db: PoolClient, image: string, postId: str
             console.log('Error in uploading image to remote', e)
         }
 
-        return {mediaType: determineMediaType(extension), ext: extension}
+        return {mediaType: determineMediaType(extension), ext: extension, filename}
 }

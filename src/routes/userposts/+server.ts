@@ -19,6 +19,8 @@ export const GET: RequestHandler = async ({locals, url}) => {
 
     pool.release()
 
+    console.log('Sending Out Posts:', JSON.stringify(usersPosts))
+
     return new Response(JSON.stringify(usersPosts))
 
 }   
