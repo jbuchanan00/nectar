@@ -3,7 +3,14 @@ import type { Post } from "../../../../baseTypes";
 
 
 export async function getPostsByUserIds(db: PoolClient, users: {id: string}[]): Promise<Post[]>{
-    const query = await db.query('SELECT * FROM post WHERE user_id IN $1 ORDER BY created_at', [users])
+    let listStr = ""
+    let listNum = 1
+    const list = users.map(user => {
+        listStr += "$" + listNum + ","
+        listNum++
+        return user.id
+    })
+    const query = await db.query(`SELECT * FROM post WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at`, [...list])
 
     if(query.rows.length < 1){
         console.log('No posts found')
