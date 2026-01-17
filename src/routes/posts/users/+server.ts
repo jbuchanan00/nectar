@@ -24,12 +24,25 @@ export const GET: RequestHandler = async ({url, locals}) => {
     }
 }
 
-export const POST: RequestHandler = async ({request}) => {
+export const POST: RequestHandler = async ({request, locals}) => {
     const {ids} = await request.json()
+    let pool
 
     if(!ids){
         return new Response('No Ids in body')
     }
+    try{
+        pool = await locals.db()
+    }catch(e){
+        console.log("Error connecting to db", e)
+        return new Response('Error connecting to db', {status: 500})
+    }
 
-    return new Response('Post method not setup yet')
+    try{
+        const posts = await getPostsByUserIds(pool, ids)
+        return new Response(JSON.stringify(posts))
+    }catch(e){
+        console.log('Error getting posts for posts/users:', e)
+        return new Response('Error getting posts for posts/users')
+    }
 }
