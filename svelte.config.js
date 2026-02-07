@@ -9,6 +9,9 @@ const config = {
 		adapter: adapter(),
 		paths: {
 			base: "/nectar"
+		},
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };

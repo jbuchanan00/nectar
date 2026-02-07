@@ -10,7 +10,7 @@ export default defineConfig({
 		watch: {
 			usePolling: true,
 		},
-		allowedHosts: ["swift-pants-run.loca.lt", "three-phones-begin.loca.lt"]
+		allowedHosts: true
 	},
 	test: {
 		workspace: [

@@ -17,8 +17,6 @@ services:
       - GRPC_IMAGE_PORT=9090
       - GRPC_TLS="0"
       - PROTO_PATH=/app/protos/image_service.proto
-    env_file: .env
-
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
@@ -33,8 +31,28 @@ services:
   #   networks:
   #     - shared
 
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      PG_USER: postgres
+      POSTGRES_PASSWORD: 4812
+      POSTGRES_DB: mydb
+      PG_PORT: 5432
+    volumes:
+      - pgdata_nectar:/var/lib/postgresql/data
+      - ./nectar-docker-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    entrypoint: ['/bin/sh', '-c', 'rm -rf /var/run/postgresql/* && docker-entrypoint.sh postgres']
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - shared
+
 volumes:
   node_modules:
+  pgdata_nectar:
 
 networks:
   shared:
