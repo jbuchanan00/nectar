@@ -1,4 +1,5 @@
 import { getPostsByUserIds } from "$lib/db/handlers/posts/getPostsByUserIds";
+import { getTagsForPost } from "$lib/db/handlers/tags/getTagsForPost";
 import type { RequestHandler } from "@sveltejs/kit";
 
 
@@ -16,8 +17,12 @@ export const GET: RequestHandler = async ({url, locals}) => {
     })
 
     try{
-        const posts = await getPostsByUserIds(pool, formattedUsers)
-        return new Response(JSON.stringify(posts))
+        const posts = await getPostsByUserIds(pool, formattedUsers, 25)
+        const postsWTag = posts.forEach(async post => {
+            const tags = await getTagsForPost(pool, post.id)
+            return {...post, tags}
+        })
+        return new Response(JSON.stringify(postsWTag))
     }catch(e){
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
@@ -39,8 +44,12 @@ export const POST: RequestHandler = async ({request, locals}) => {
     }
 
     try{
-        const posts = await getPostsByUserIds(pool, ids)
-        return new Response(JSON.stringify(posts))
+        const posts = await getPostsByUserIds(pool, ids, 25)
+        const postsWTag = posts.forEach(async post => {
+            const tags = await getTagsForPost(pool, post.id)
+            return {...post, tags}
+        })
+        return new Response(JSON.stringify(postsWTag))
     }catch(e){
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
