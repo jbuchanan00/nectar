@@ -10,7 +10,8 @@ export async function getPostsByUserIds(db: PoolClient, users: {id: string}[], p
         listNum++
         return user.id
     })
-    const query = await db.query(`SELECT * FROM post WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at LIMIT ` + listNum , [...list, pageSize])
+    
+    const query = await db.query(`SELECT * FROM post WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at LIMIT $` + listNum , [...list, pageSize])
 
     if(query.rows.length < 1){
         console.log('No posts found')
