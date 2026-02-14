@@ -34,8 +34,8 @@ export const POST: RequestHandler = async ({request, locals}) => {
     let pool
     console.log("Request", req)
     const ids = req.ids
-
-    if(!ids){
+    console.log("Ids: ", ids)
+    if(!ids || ids.length < 1){
         return new Response('No Ids in body')
     }
     try{
@@ -48,12 +48,11 @@ export const POST: RequestHandler = async ({request, locals}) => {
     try{
         const posts = await getPostsByUserIds(pool, ids, 25)
         console.log("First posts:", posts)
-        const postsWTag = posts.forEach(async post => {
+        const postsWTag = await Promise.all(posts.map(async post => {
             const tags = await getTagsForPost(pool, post.id)
-            console.log('final', JSON.stringify({...post, tags}))
             return {...post, tags}
-        })
-        console.log('Response', postsWTag)
+        }))
+        
         return new Response(JSON.stringify(postsWTag))
     }catch(e){
         console.log('Error getting posts for posts/users:', e)

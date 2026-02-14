@@ -10,6 +10,7 @@ export async function getPostsByUserIds(db: PoolClient, users: {id: string}[], p
         listNum++
         return user.id
     })
+    console.log("Query", `SELECT * FROM post WHERE user_id IN (${listStr}) ORDER BY created_at LIMIT $` + listNum + ')')
     
     const query = await db.query(`SELECT * FROM post WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at LIMIT $` + listNum , [...list, pageSize])
 
