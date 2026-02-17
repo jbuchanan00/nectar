@@ -10,9 +10,10 @@ export async function getPostsByUserIds(db: PoolClient, users: {id: string}[], p
         listNum++
         return user.id
     })
-    console.log("Query", `SELECT * FROM post WHERE user_id IN (${listStr}) ORDER BY created_at LIMIT $` + listNum + ')')
     
-    const query = await db.query(`SELECT * FROM post WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at LIMIT $` + listNum , [...list, pageSize])
+    const query = await db.query(`SELECT post.*, post_image.image_id FROM post 
+        LEFT JOIN post_image ON post_image.post_id = post.id
+        WHERE user_id IN (${listStr.slice(0, -1)}) ORDER BY created_at LIMIT $` + listNum , [...list, pageSize])
 
     if(query.rows.length < 1){
         console.log('No posts found')
