@@ -7,6 +7,7 @@ import getTagIds from './tags/getTagIds'
 
 export {insertPostImage, getMediaTypeId, convertFieldsToIds, getRoleId, getTagId, getTagIds}
 export {getPostById} from './posts/getPostById'
+export {insertInstagramPost} from './posts/insertInstagramPost'
 export {getPostsByUserId} from './posts/getPostsByUserId'
 export {insertPost} from './posts/insertPost'
 export {insertPostTags} from './tags/insertPostTags'

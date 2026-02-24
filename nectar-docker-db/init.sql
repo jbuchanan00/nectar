@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS instagram_post (
   created_at TIMESTAMP NOT NULL,
   user_id VARCHAR NOT NULL,
   media_type TEXT NOT NULL,
+  media_url TEXT NOT NULL,
   permalink TEXT NOT NULL,
-  caption TEXT,
-  view_count INTEGER
+  caption TEXT
 );
 
 CREATE TABLE IF NOT EXISTS post_tag (

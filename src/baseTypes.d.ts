@@ -24,6 +24,16 @@ export declare type User = {
     role: Role
 }
 
+export declare type InstagramPost = {
+    id: string,
+    createdAt: string,
+    userId: string | null,
+    mediaType: MediaType | null,
+    mediaUrl: string,
+    permalink: string,
+    caption: string | null
+}
+
 
 export declare type PostTags = string[]
 
