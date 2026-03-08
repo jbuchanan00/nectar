@@ -21,7 +21,7 @@ export async function insertInstagramPost(db: PoolClient, postInfo: InstagramPos
         await db.query(`COMMIT;`)
     }catch(e){
         await db.query(`ROLLBACK;`)
-        console.log('Error inserting post image:', e)
+        console.log('Error inserting instagram posts:', e)
         throw new Error('Error in db insert')
     }
 }

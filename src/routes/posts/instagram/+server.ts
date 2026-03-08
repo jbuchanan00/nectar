@@ -3,6 +3,11 @@ import type { InstagramPost } from "../../../baseTypes";
 import { insertInstagramPost } from "$lib/db/handlers";
 
 
+export const GET: RequestHandler = async ({url, locals}) => {
+    const userId = url.searchParams.get('userid')
+    return new Response()
+}
+
 
 export const POST: RequestHandler = async ({request, locals}) => {
     const {posts, userId} = await request.json()

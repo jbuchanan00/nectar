@@ -37,10 +37,10 @@ services:
     ports:
       - '5433:5432'
     environment:
-      PG_USER: postgres
-      POSTGRES_PASSWORD: 4812
-      POSTGRES_DB: mydb
-      PG_PORT: 5432
+      PG_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PG_PORT: ${POSTGRES_PORT}
     volumes:
       - pgdata_nectar:/var/lib/postgresql/data
       - ./nectar-docker-db/init.sql:/docker-entrypoint-initdb.d/init.sql
