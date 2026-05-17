@@ -15,13 +15,20 @@ export declare type Post = {
     role: Role | number,
     mediaType: MediaType | number | null,
     body: string,
-    userId: string
+    userId: string,
+    photoExt?: string | null,
+    tags?: string[] | null
 }
 
 export declare type User = {
     id: string,
     displayName: string,
     role: Role
+}
+
+export declare type Tag = {
+    tag_name: string,
+    post_id: string
 }
 
 

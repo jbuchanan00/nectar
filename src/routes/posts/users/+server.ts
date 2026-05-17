@@ -4,6 +4,8 @@ import type { RequestHandler } from "@sveltejs/kit";
 
 
 export const GET: RequestHandler = async ({url, locals}) => {
+    console.log("Begin Get Posts by Users")
+    let i = +Date.now()
     const users = url.searchParams.getAll('user')
 
     if(!users){
@@ -22,19 +24,24 @@ export const GET: RequestHandler = async ({url, locals}) => {
             const tags = await getTagsForPost(pool, post.id)
             return {...post, tags}
         })
+        console.log("Successfully Got Posts: ", +Date.now-i)
         return new Response(JSON.stringify(postsWTag))
     }catch(e){
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
+    }finally{
+        pool.release()
     }
 }
 
 export const POST: RequestHandler = async ({request, locals}) => {
+    console.log("Begin Using Post to Get Users Posts")
+    let i = +Date.now()
     const req = await request.json()
     let pool
-    console.log("Request", req)
+    // console.log("Request", req)
     const ids = req.ids
-    console.log("Ids: ", ids)
+    // console.log("Ids: ", ids)
     if(!ids || ids.length < 1){
         return new Response('No Ids in body')
     }
@@ -52,10 +59,12 @@ export const POST: RequestHandler = async ({request, locals}) => {
             const tags = await getTagsForPost(pool, post.id)
             return {...post, tags, source: "inkedout"}
         }))
-        
+        console.log("Successfuly Used Post to Get Users Posts: ", +Date.now()-i)
         return new Response(JSON.stringify(postsWTag))
     }catch(e){
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
+    }finally{
+        pool.release()
     }
 }

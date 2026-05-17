@@ -6,10 +6,11 @@ import type {Post} from '../../../../baseTypes'
 
 const insertPost = async (db: PoolClient, postMessage: Post): Promise<void>  => {
     await convertFieldsToIds(db, postMessage)
+    
     const sqlPostQuery = `INSERT INTO post 
-        (id, created_at, updated_at, role_id, media_type_id, body, user_id)
+        (id, created_at, updated_at, role_id, media_type_id, body, user_id ${postMessage.photoExt ? `, media_ext` : ''})
         VALUES
-        ($1, $2, $3, $4, $5, $6, $7)`
+        ($1, $2, $3, $4, $5, $6, $7 ${postMessage.photoExt ? `, $8` : ``})`
     
     await db.query(sqlPostQuery, Object.values(postMessage))
 

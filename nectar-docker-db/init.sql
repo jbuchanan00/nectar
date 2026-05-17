@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS post (
     role_id INTEGER NOT NULL REFERENCES role(id),
     media_type_id INTEGER NOT NULL REFERENCES media_type(id),
     body VARCHAR,
-    user_id VARCHAR NOT NULL
+    user_id VARCHAR NOT NULL,
+    media_ext VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS instagram_post (

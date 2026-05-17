@@ -1,10 +1,13 @@
 //post/userposts?userId=string&pageSize=number&page=number
 
 import { getPostsByUserId } from "$lib/db/handlers/posts/getPostsByUserId";
+import { getTagsForPosts } from "$lib/db/handlers/tags/getTagsForPosts";
 import type { RequestHandler } from "@sveltejs/kit";
 
 
 export const GET: RequestHandler = async ({locals, url}) => {
+    console.log("Beginning User Posts Get Request")
+    let i = +Date.now()
     const userId = url.searchParams.get('userId')
     const pageSize = url.searchParams.get('pageSize')
     const page = url.searchParams.get('page')
@@ -14,13 +17,32 @@ export const GET: RequestHandler = async ({locals, url}) => {
     }
 
     const pool = await locals.db()
+    try{
+    
+        const usersPosts = await getPostsByUserId(pool, userId, parseInt(pageSize), parseInt(page))
+        const usersPostsIds = usersPosts.map(post => {
+            post.tags = []
+            return post.id
+        })
 
-    const usersPosts = await getPostsByUserId(pool, userId, parseInt(pageSize), parseInt(page))
+        const postTags = await getTagsForPosts(pool, usersPostsIds)
 
-    pool.release()
+        postTags.map(tag => {
+            const post = usersPosts.find(post => post.id == tag.post_id)
+            if(!post || !post.tags) return;
+            post.tags.push(tag.tag_name)
+        })
+    
+        // pool.release()
 
-    console.log('Sending Out Posts:', JSON.stringify(usersPosts))
-
-    return new Response(JSON.stringify(usersPosts))
+        console.log("Ending User Posts Get Request: ", +Date.now() - i)
+    
+        return new Response(JSON.stringify(usersPosts))
+    }catch(e){
+        console.log("Error sending out posts for user,", e)
+        return Response.error()
+    }finally{
+        pool.release()
+    }
 
 }   
