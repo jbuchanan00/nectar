@@ -43,7 +43,8 @@ export const POST: RequestHandler = async ({request, locals}) => {
     const ids = req.ids
     // console.log("Ids: ", ids)
     if(!ids || ids.length < 1){
-        return new Response('No Ids in body')
+        console.log("No Ids to get Posts with")
+        return new Response(JSON.stringify([]))
     }
     try{
         pool = await locals.db()
@@ -54,7 +55,7 @@ export const POST: RequestHandler = async ({request, locals}) => {
 
     try{
         const posts = await getPostsByUserIds(pool, ids, 25)
-        console.log("First posts:", posts)
+        
         const postsWTag = await Promise.all(posts.map(async post => {
             const tags = await getTagsForPost(pool, post.id)
             return {...post, tags, source: "inkedout"}
