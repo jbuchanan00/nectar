@@ -11,6 +11,7 @@ export async function getTagsForPosts(db: PoolClient, postIds: string[]): Promis
     }
     const query = `SELECT pt.post_id, t.tag_name FROM post_tag as pt LEFT JOIN tag as t on t.id = pt.tag_id WHERE pt.post_id in (${paramsString})`
     try{
+        console.log("The query for tags", query)
         const res = await db.query(query, postIds)
         
         const rows = res.rows

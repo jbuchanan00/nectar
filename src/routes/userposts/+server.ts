@@ -24,6 +24,9 @@ export const GET: RequestHandler = async ({locals, url}) => {
             post.tags = []
             return post.id
         })
+        if(usersPosts.length < 1){
+            return new Response(JSON.stringify([]))
+        }
 
         const postTags = await getTagsForPosts(pool, usersPostsIds)
 
