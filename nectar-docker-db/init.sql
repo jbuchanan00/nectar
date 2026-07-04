@@ -32,19 +32,30 @@ CREATE TABLE IF NOT EXISTS instagram_post (
   media_type TEXT NOT NULL,
   permalink TEXT NOT NULL,
   caption TEXT,
-  view_count INTEGER
+  view_count INTEGER, 
+  media_ext VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS post_tag (
     tag_id INTEGER REFERENCES tag(id),
-    post_id VARCHAR REFERENCES post(id)
+    post_id VARCHAR REFERENCES post(id),
+    insta_post_id VARCHAR REFERENCES instagram_post(id),
+    CHECK ((post_id is not null and insta_post_id is null) OR (post_id is null and insta_post_id is not null))
 );
+
 
 CREATE TABLE IF NOT EXISTS post_image (
     image_id VARCHAR,
     post_id VARCHAR REFERENCES post(id),
-    CONSTRAINT post_image_pkey PRIMARY KEY(image_id, post_id)
+    insta_post_id VARCHAR REFERENCES instagram_post (id),
+    CHECK ((post_id is not null and insta_post_id is null) OR (post_id is null and insta_post_id is not null))
 );
+
+CREATE INDEX idx_post_id ON post (id);
+CREATE INDEX idx_instagram_id ON instagram_post (id);
+CREATE INDEX idx_tag_name ON tag (tag_name);
+CREATE INDEX idx_post_image ON post_image (post_id, insta_post_id);
+CREATE INDEX idx_post_tag ON post_tag (post_id, insta_post_id);
 
 INSERT INTO role (role_name) VALUES ('canvas'), ('artist'), ('shop');
 

@@ -31,6 +31,15 @@ export declare type Tag = {
     post_id: string
 }
 
+export declare type InstagramPost = {
+    id: string,
+    caption: string,
+    media_type: string,
+    permalink: string,
+    timestamp: string,
+    userId: string,
+    photoExt?: string | null
+}
 
 export declare type PostTags = string[]
 
