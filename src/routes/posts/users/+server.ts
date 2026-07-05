@@ -58,7 +58,7 @@ export const POST: RequestHandler = async ({request, locals}) => {
         
         const postsWTag = await Promise.all(posts.map(async post => {
             const tags = await getTagsForPost(pool, post.id)
-            return {...post, tags, source: "inkedout"}
+            return {...post, tags}
         }))
         console.log("Successfuly Used Post to Get Users Posts: ", +Date.now()-i)
         return new Response(JSON.stringify(postsWTag))
