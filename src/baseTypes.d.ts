@@ -37,7 +37,7 @@ export declare type InstagramPost = {
     media_type: string,
     permalink: string,
     timestamp: string,
-    userId: string,
+    user_id: string,
     photoExt?: string | null
 }
 

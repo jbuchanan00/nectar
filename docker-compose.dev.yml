@@ -9,11 +9,11 @@ services:
       - .:/app
       -  node_modules:/app/node_modules
     environment:
-      - POSTGRES_USER_NECTAR=${POSTGRES_USER_NECTAR}
-      - POSTGRES_PASSWORD_NECTAR=${POSTGRES_PASSWORD_NECTAR}
-      - POSTGRES_DB_NECTAR=${POSTGRES_DB_NECTAR}
-      - POSTGRES_PORT_NECTAR=${POSTGRES_PORT_NECTAR}
-      - POSTGRES_HOST_NECTAR=${POSTGRES_HOST_NECTAR}
+      - POSTGRES_USER_NECTAR=${POSTGRES_USER}
+      - POSTGRES_PASSWORD_NECTAR=${POSTGRES_PASSWORD}
+      - POSTGRES_DB_NECTAR=${POSTGRES_DB}
+      - POSTGRES_PORT_NECTAR=${POSTGRES_PORT}
+      - POSTGRES_HOST_NECTAR=${POSTGRES_HOST}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
