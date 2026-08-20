@@ -3,38 +3,38 @@ import { getTagsForPost } from "$lib/db/handlers/tags/getTagsForPost";
 import type { RequestHandler } from "@sveltejs/kit";
 
 
-export const GET: RequestHandler = async ({url, locals}) => {
+export const GET: RequestHandler = async ({ url, locals }) => {
     console.log("Begin Get Posts by Users")
     let i = +Date.now()
     const users = url.searchParams.getAll('user')
 
-    if(!users){
+    if (!users) {
         return new Response('No users')
     }
 
     const pool = await locals.db()
 
     const formattedUsers = users.map(user => {
-        return {id: user}
+        return { id: user }
     })
 
-    try{
+    try {
         const posts = await getPostsByUserIds(pool, formattedUsers, 25)
         const postsWTag = posts.forEach(async post => {
             const tags = await getTagsForPost(pool, post.id)
-            return {...post, tags}
+            return { ...post, tags }
         })
-        console.log("Successfully Got Posts: ", +Date.now-i)
+        console.log("Successfully Got Posts: ", +Date.now - i)
         return new Response(JSON.stringify(postsWTag))
-    }catch(e){
+    } catch (e) {
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
-    }finally{
+    } finally {
         pool.release()
     }
 }
 
-export const POST: RequestHandler = async ({request, locals}) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
     console.log("Begin Using Post to Get Users Posts")
     let i = +Date.now()
     const req = await request.json()
@@ -42,30 +42,32 @@ export const POST: RequestHandler = async ({request, locals}) => {
     // console.log("Request", req)
     const ids = req.ids
     // console.log("Ids: ", ids)
-    if(!ids || ids.length < 1){
+    if (!ids || ids.length < 1) {
         console.log("No Ids to get Posts with")
         return new Response(JSON.stringify([]))
     }
-    try{
+    try {
         pool = await locals.db()
-    }catch(e){
+    } catch (e) {
         console.log("Error connecting to db", e)
-        return new Response('Error connecting to db', {status: 500})
+        return new Response('Error connecting to db', { status: 500 })
     }
 
-    try{
+    try {
         const posts = await getPostsByUserIds(pool, ids, 25)
-        
+
+        console.log("These are the posts", JSON.stringify(posts))
         const postsWTag = await Promise.all(posts.map(async post => {
             const tags = await getTagsForPost(pool, post.id)
-            return {...post, tags}
+            return { ...post, tags }
         }))
-        console.log("Successfuly Used Post to Get Users Posts: ", +Date.now()-i)
+        console.log("These are the posts", JSON.stringify(postsWTag))
+        console.log("Successfuly Used Post to Get Users Posts: ", +Date.now() - i)
         return new Response(JSON.stringify(postsWTag))
-    }catch(e){
+    } catch (e) {
         console.log('Error getting posts for posts/users:', e)
         return new Response('Error getting posts for posts/users')
-    }finally{
+    } finally {
         pool.release()
     }
 }
