@@ -32,6 +32,7 @@ export declare type Tag = {
 }
 
 export declare type InstagramPost = {
+    image_id: string
     id: string,
     caption: string,
     media_type: string,

@@ -3,6 +3,7 @@ import type { RequestHandler } from "@sveltejs/kit";
 
 
 export const GET: RequestHandler = async ({ url, locals }) => {
+    const millis = new Date().getMilliseconds()
     const postId = url.searchParams.get("id")
 
     if (!postId || postId == "") {
@@ -19,6 +20,6 @@ export const GET: RequestHandler = async ({ url, locals }) => {
     } finally {
         pool.release()
     }
-
-    return new Response
+    console.log("Successfully deleted post in", new Date().getMilliseconds() - millis, "ms")
+    return new Response(JSON.stringify({ "status": "success" }))
 }
